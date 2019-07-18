@@ -6,6 +6,7 @@ public class TextEN extends Text
   @Override public String getEnterSurvey() { return "Enter Survey"; }
   @Override public String getEditSurvey() { return "Edit Survey"; }
   @Override public String getGreetAdminHtml() { return "<b>Hello Admin!</b><br/><br/>You can execute this Survey<br/>directly, or edit the Survey.<br/><br/>"; }
+  @Override public String getAcceptCookies() { return "Accept Cookies"; }
   @Override public String getCookieNeeded()
   {
     return "<b>Cookies are used to idendificate survey admins and users.</b><br/>"

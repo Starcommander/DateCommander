@@ -19,7 +19,6 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-import com.starcom.dater.shared.FieldVerifier;
 import com.starcom.dater.shared.FieldVerifier.AnalyzerResult;
 import com.starcom.dater.shared.FieldVerifier.FieldList;
 import com.starcom.dater.shared.FieldVerifier.UrlParameter;

@@ -28,6 +28,15 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
       String ret = sendSurvey(fields[1], fields[2]);
       return ret;
     }
+    else if (input.startsWith(ReqType.GetSurveyTable.toString() + ":"))
+    {
+      String[] fields = input.split(":");
+      if ( fields.length != 3 ) throw new IllegalArgumentException("Fields len not ok!");
+      if (!FieldVerifier.isValidID(fields[1])) throw new IllegalArgumentException("UserID not ok!");
+      if (!FieldVerifier.isValidID(fields[2])) throw new IllegalArgumentException("SurveyID not ok!");
+      String ret = sendSurveyTable(fields[1], fields[2]);
+      return ret;
+    }
     else
     {
       throw new IllegalArgumentException(
@@ -51,6 +60,31 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 //
 //    return "Hello, " + input + "!<br><br>I am running " + serverInfo
 //        + ".<br><br>It looks like you are using:<br>" + userAgent;
+  }
+
+  private String sendSurveyTable(String userId, String surveyID)
+  {
+    File userDir = ServUtils.getWorkingDirExisting(surveyID, true);
+    File srcFile = new File(userDir.getParent(), ServUtils.MAIN_FILE);
+    if (!srcFile.exists())
+    {
+      throw new IllegalArgumentException("Unknown Survey ID: " + Utils.cutText(surveyID, 30));
+    }
+    StringBuilder sb = ServUtils.readTextFile(srcFile);
+    if (sb == null)
+    {
+      throw new IllegalArgumentException("Error on reading Survey!");
+    }
+    for (String f : userDir.list())
+    {
+      StringBuilder usb = ServUtils.readTextFile(new File(userDir,f));
+      if (usb == null)
+      {
+        throw new IllegalArgumentException("Error on reading Survey user: " + f);
+      }
+      sb.append("\n-\n").append(usb);
+    }
+    return sb.toString();
   }
 
   /** The userID and surveyID must be checked before. */

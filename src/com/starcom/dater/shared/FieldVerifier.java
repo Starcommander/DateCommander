@@ -26,7 +26,7 @@ public class FieldVerifier
   public enum FieldList { USER_NAME, USER_NAME_ID, SURVEY_NAME, SURVEY_DESCRIPTION, SURVEY_ID, VIEW_TYPE, CH };
   public enum CookieList { CookAllowed, DaterName, DaterNameId };
   public enum UrlParameter { SurveyId };
-  public enum ReqType { GetSurvey };
+  public enum ReqType { GetSurvey, GetSurveyTable };
   public enum ViewType { NewUser, ExistUser, Admin };
 
   /**

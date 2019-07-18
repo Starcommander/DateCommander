@@ -6,6 +6,7 @@ public class TextDE extends Text
   @Override public String getEnterSurvey() { return "Zur Umfrage"; }
   @Override public String getEditSurvey() { return "Umfrage bearbeiten"; }
   @Override public String getGreetAdminHtml() { return "<b>Hallo Admin!</b><br/><br/>Du kannst direkt die Umfrage<br/>starten, oder diese bearbeiten.<br/><br/>"; }
+  @Override public String getAcceptCookies() { return "Akzeptiere Cookies"; }
   @Override public String getCookieNeeded()
   {
     return "<b>Cookies werden benötigt, um Benutzer<br/>und Admin der Umfrage zu identifizieren.</b><br/>"

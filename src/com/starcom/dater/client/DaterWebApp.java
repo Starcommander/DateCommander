@@ -44,27 +44,27 @@ public class DaterWebApp implements EntryPoint
     
     final String surveyId = Window.Location.getParameter(UrlParameter.SurveyId.toString());
     boolean c_allowed = Boolean.parseBoolean(Cookies.getCookie(C_COOK_ALLOWED));
-    if (c_allowed) { showForm(surveyId); }
+    if (c_allowed) { showFormTable(surveyId, ReqType.GetSurvey.toString()); }
     else
     { // Ask for cookies.
       TextBoxWin box = new TextBoxWin("Cookies");
       String text = Text.getCur().getCookieNeeded();
       box.setText(text);
-      box.setButtonText("Accept Cookies");
+      box.setButtonText(Text.getCur().getAcceptCookies());
       box.onClose(new ClickHandler()
       {
         @Override
         public void onClick(ClickEvent event)
         {
           Cookies.setCookie(C_COOK_ALLOWED, "true", Utils.getDateInYears());
-          showForm(surveyId);
+          showFormTable(surveyId, ReqType.GetSurvey.toString());
         }
       });
       box.showBox();
     }
   }
   
-  private void showForm(final String surveyId)
+  private void showFormTable(final String surveyId, final String requestType)
   {
     logger.fine("Execute showForm(");
     String userId = Cookies.getCookie(C_DATER_NAME_ID);
@@ -79,7 +79,7 @@ public class DaterWebApp implements EntryPoint
       return;
     }
     Transmitter.getTransmitter().greetServer(
-        ReqType.GetSurvey.toString() + ":" + userId + ":" + surveyId, new AsyncCallback<String>()
+        requestType + ":" + userId + ":" + surveyId, new AsyncCallback<String>()
     {
       @Override
       public void onFailure(Throwable caught)
@@ -103,13 +103,17 @@ public class DaterWebApp implements EntryPoint
       public void onSuccess(String result)
       {
 logger.warning("FullResult:\n" + result);
+        if (requestType.equals(ReqType.GetSurveyTable.toString()))
+        {
+          showTableNow(result, surveyId);
+          return;
+        }
         HashMap<String, String> prop = Utils.toHashMap(result);
         String viewTypeS = prop.get(FieldList.VIEW_TYPE.toString());
 logger.warning("Result View: " + viewTypeS);
         if (viewTypeS == null) { viewTypeS = ViewType.NewUser.toString(); }
         ViewType viewType = ViewType.valueOf(viewTypeS);
 logger.warning("Result ViewV: " + viewType.toString());
-        
         if (viewType == ViewType.Admin)
         { // Greetings to admin
 logger.warning("Show as admin!");
@@ -123,22 +127,64 @@ logger.warning("Show as newUser!");
         else
         {
 logger.warning("Show result!");
-          showResultNow(prop, surveyId);
+          showFormTable(surveyId, ReqType.GetSurveyTable.toString());
         }
       }
     });
   }
 
-  private void showResultNow(HashMap<String, String> prop, String surveyId)
+  private void showTableNow(String input, String surveyId)
   {
-    //TODO: Replace this fakeTable
-    ArrayList<String> fakeTable = new ArrayList<String>();
-    fakeTable.add("Name"); fakeTable.add("Wohnung"); fakeTable.add("Haus");
-    fakeTable.add("Paul"); fakeTable.add("Ja");      fakeTable.add("Nein");
-    fakeTable.add("Hans"); fakeTable.add("Nein");    fakeTable.add("Ja");
+    int headIndex = input.indexOf("\n-\n");
+    HashMap<String, String> prop = Utils.toHashMap(input.substring(0, headIndex));
+    ArrayList<String> propTable = new ArrayList<String>();
+    propTable.add("Name");
+    for (int i=0; i<BaseWebApp.MAX_CHOICES; i++)
+    { // Fill Header
+      String v = prop.get(FieldList.CH.toString() + i);
+      if (v == null) { break; }
+      propTable.add(v);
+    }
+    int columns = propTable.size();
+    boolean isHeader = true;
+    for (String userEntries : input.split("\n-\n"))
+    {
+      if (isHeader) { isHeader = false; continue; }
+      String[] userLine = new String[columns];
+      for (String userEntry : userEntries.split("\n"))
+      {
+        int index = userEntry.indexOf('=');
+        if (index == -1) { continue; }
+        String key = userEntry.substring(0, index);
+        String val = userEntry.substring(index + 1);
+        if (key.equals(FieldList.USER_NAME.toString()))
+        {
+          userLine[0] = val;
+        }
+        else if (key.startsWith(FieldList.CH.toString()))
+        {
+          String numS = key.substring(2);
+          if (!numS.matches("[0-9][0-9]*")) { continue; }
+          int num = Integer.parseInt(numS) + 1;
+          if (num > (userLine.length - 1)) { continue; }
+          userLine[num] = val;
+        }
+      }
+      for (String userField : userLine)
+      {
+        if (userField == null) { propTable.add("---"); }
+        else { propTable.add(userField); }
+      }
+    }
+    
+//    // Replace this fakeTable
+//    ArrayList<String> fakeTable = new ArrayList<String>();
+//    fakeTable.add("Name"); fakeTable.add("Wohnung"); fakeTable.add("Haus");
+//    fakeTable.add("Paul"); fakeTable.add("Ja");      fakeTable.add("Nein");
+//    fakeTable.add("Hans"); fakeTable.add("Nein");    fakeTable.add("Ja");
 
     HTML html = new HTML();
-    html.setHTML(HtmlUtil.buildTable(fakeTable, 3).toString());
+    html.setHTML(HtmlUtil.buildTable(propTable, columns).toString());
     html.addStyleName("mytable");
     RootPanel.get("formContainer").add(html);
   }
@@ -178,7 +224,7 @@ logger.warning("Show result!");
     
     boolean showAsEdit = forceEdit || (surveyId==null);
     BaseWebApp.FormHeader formHeader = new BaseWebApp.FormHeader("formContainer", showAsEdit, surveyId, prop);
-    BaseWebApp.FormBody formBody = new BaseWebApp.FormBody(formHeader, prop);
+    BaseWebApp.FormBody formBody = new BaseWebApp.FormBody("editButtonContainer", formHeader, prop);
     RootPanel.get("sendButtonContainer").add(sendButton);
     RootPanel.get("errorLabelContainer").add(errorLabel);
     
