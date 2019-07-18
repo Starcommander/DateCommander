@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+              http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5"
+         xmlns="http://java.sun.com/xml/ns/javaee">
+
+  <!-- Servlets -->
+  <servlet>
+    <servlet-name>greetServlet</servlet-name>
+    <servlet-class>com.starcom.dater.server.GreetingServiceImpl</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>fileUploadServlet</servlet-name>
+    <servlet-class>com.starcom.dater.server.FileUploadResponse</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>greetServlet</servlet-name>
+    <url-pattern>/daterwebapp/greet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>fileUploadServlet</servlet-name>
+    <url-pattern>/surveyFormHandler</url-pattern>
+  </servlet-mapping>
+  
+  <!-- Default page to serve -->
+  <welcome-file-list>
+    <welcome-file>DaterWebApp.html</welcome-file>
+  </welcome-file-list>
+
+</web-app>
