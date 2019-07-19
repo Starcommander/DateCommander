@@ -6,7 +6,6 @@ import com.starcom.dater.shared.FieldVerifier.FieldList;
 import com.starcom.dater.shared.FieldVerifier.UrlParameter;
 import com.starcom.dater.shared.Utils;
 import com.starcom.dater.client.window.CommitBox;
-
 import java.util.HashMap;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -82,7 +81,7 @@ public class BaseWebApp
         {
           String result = ev.getResults();
           if (result == null) { result = "No result from server!"; }
-          result = Utils.cutPreTag(result);
+          result = Utils.htmlToText(result);
           commitBox.dialogBox.setText("Remote Procedure Call");
           commitBox.serverResponseLabel.removeStyleName("serverResponseLabelError");
           String resultResp = result;
@@ -92,10 +91,6 @@ public class BaseWebApp
             commitBox.resultUri = result;
             String surId = UrlParameter.SurveyId.toString();
             surId = Utils.getUriParameter(surId, result);
-//            String admVL = Cookies.getCookie(C_ADM_VIEW_LIST);
-//            if (admVL == null) { admVL = surId; }
-//            else { admVL = admVL + "," + surId; }
-//            Cookies.setCookie(C_ADM_VIEW_LIST, admVL, Utils.getDateInYears());
           }
           commitBox.serverResponseLabel.setHTML(resultResp);
           commitBox.dialogBox.center();

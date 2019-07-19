@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import com.google.gwt.user.client.ui.HTML;
+
 public class Utils
 {
   public static String generateID()
@@ -61,15 +63,11 @@ public class Utils
     return new Date(dateInYears);
   }
 
-  public static String cutPreTag(String result)
+  public static String htmlToText(String result)
   {
-    if (result.length() > 11 &&
-        result.startsWith("<pre>") &&
-        result.endsWith("</pre>"))
-    { // Remove <pre>xxx</pre>
-      result = result.substring(5, result.length() - 6);
-    }
-    return result;
+    HTML html = new HTML();
+    html.setHTML(result);
+    return html.getText();
   }
 
   public static String cutText(String txt, int maxLength)

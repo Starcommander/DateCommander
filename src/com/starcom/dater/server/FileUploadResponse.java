@@ -30,6 +30,7 @@ import com.starcom.dater.shared.Utils;
 public class FileUploadResponse extends HttpServlet implements Servlet
 {
   // TODO: Read serverHost from config.
+  // TODO: Rename to FormUploadResponse.
   public static final String serverHost = "http://127.0.0.1:8888/DaterWebApp.html";
   private static final long serialVersionUID = 8305367618713715640L;
 
@@ -39,7 +40,7 @@ public class FileUploadResponse extends HttpServlet implements Servlet
     response.setContentType("text/plain");
 
     HashMap<String,String> fields = new HashMap<String,String>();
-    FileItem uploadItem = getFileItem(request, fields);
+    FileItem uploadItem = getFileItemAndFields(request, fields);
     String requestorID = fields.get(FieldList.USER_NAME_ID.toString());
     fields.remove(FieldList.USER_NAME_ID.toString());
     AnalyzerResult result = ServUtils.getAnalyzerResult(fields, requestorID);
@@ -111,7 +112,7 @@ public class FileUploadResponse extends HttpServlet implements Servlet
 
   }
   
-  private FileItem getFileItem(HttpServletRequest request, HashMap<String,String> fields)
+  private FileItem getFileItemAndFields(HttpServletRequest request, HashMap<String,String> fields)
   {
     FileItemFactory factory = new DiskFileItemFactory();
     ServletFileUpload upload = new ServletFileUpload(factory);
