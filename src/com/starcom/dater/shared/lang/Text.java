@@ -9,9 +9,12 @@ public abstract class Text
   static Text curLang = new TextEN();
 
   public abstract String getError();
+  public abstract String getClose();
   public abstract String getEnterSurvey();
-  public abstract String getEditSurvey();
+  public abstract String getEditSurveyChoice();
+  public abstract String getEditSurveyForm();
   public abstract String getGreetAdminHtml();
+  public abstract String getGreetUsrHtml();
   public abstract String getCookieNeeded();
   public abstract String getAcceptCookies();
   public static void selectLanguage(String lang)

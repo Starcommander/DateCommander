@@ -3,6 +3,7 @@
 
 /** Example rules used by the template application (remove for your app) */
 h1 {
+  font-family: cursive;
   font-size: 2em;
   font-weight: bold;
   color: #777777;
@@ -12,6 +13,7 @@ h1 {
 }
 
 h2 {
+  font-family: cursive;
   font-size: 1.5em;
   font-weight: bold;
   color: #777777;
@@ -19,7 +21,7 @@ h2 {
 }
 
 .mytable {
-	border: 1px solid black;
+	border: 10px solid yellowgreen;
 }
 
 .sendButton {

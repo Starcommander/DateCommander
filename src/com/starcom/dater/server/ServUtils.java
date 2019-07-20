@@ -4,13 +4,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.HashMap;
-import java.util.Map.Entry;
-import java.util.Properties;
 
+import com.google.gwt.core.client.GWT;
 import com.starcom.dater.shared.FieldVerifier;
 import com.starcom.dater.shared.FieldVerifier.AnalyzerResult;
 import com.starcom.dater.shared.FieldVerifier.FieldList;
-import com.starcom.dater.shared.FieldVerifier.ViewType;
 
 public class ServUtils
 {
@@ -60,29 +58,24 @@ public class ServUtils
     File admFile = new File(workDir,ADMIN_FILE);
     return readTextFile(admFile).toString().trim().equals(requestorID);
   }
-
-  public static String requestViewType(String userId, String surveyID)
+  
+  public static boolean requestIsAdm(String userId, String surveyID)
   {
     File workDir = new File(getWorkingDirRoot(), surveyID);
     File admFile = new File(workDir,ADMIN_FILE);
-    File userDir = new File(workDir, USER_SUB_DIR);
     if (!workDir.exists()) { throw new IllegalStateException("Assume existing Survey!"); }
     if (!admFile.exists()) { throw new IllegalStateException("Assume existing Survey adm!"); }
-    if (!userDir.exists()) { throw new IllegalStateException("Assume existing Survey usr!"); }
-
-    if (new File(userDir, userId).exists())
-    {
-      return ViewType.ExistUser.toString();
-    }
     boolean isAdmin = readTextFile(admFile).toString().trim().equals(userId);
-System.out.println("Admincompare u='" + userId + "'");
-System.out.println("Admincompare f='" + readTextFile(admFile) + "'");
-System.out.println("Admincompare b=" + isAdmin);
-    if (isAdmin)
-    {
-      return ViewType.Admin.toString();
-    }
-    return ViewType.NewUser.toString();
+    return isAdmin;
+  }
+
+  public static boolean requestNewUsr(String userId, String surveyID)
+  {
+    File workDir = new File(getWorkingDirRoot(), surveyID);
+    File userDir = new File(workDir, USER_SUB_DIR);
+    if (!workDir.exists()) { throw new IllegalStateException("Assume existing Survey!"); }
+    if (!userDir.exists()) { throw new IllegalStateException("Assume existing Survey usr!"); }
+    return new File(userDir, userId).exists();
   }
   
   public static StringBuilder readTextFile(File file)

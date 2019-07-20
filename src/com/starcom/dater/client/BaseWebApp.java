@@ -3,7 +3,6 @@ package com.starcom.dater.client;
 import com.starcom.dater.shared.FieldVerifier;
 import com.starcom.dater.shared.FieldVerifier.CookieList;
 import com.starcom.dater.shared.FieldVerifier.FieldList;
-import com.starcom.dater.shared.FieldVerifier.UrlParameter;
 import com.starcom.dater.shared.Utils;
 import com.starcom.dater.client.window.CommitBox;
 import java.util.HashMap;
@@ -11,6 +10,7 @@ import java.util.HashMap;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.DecoratorPanel;
@@ -30,12 +30,13 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class BaseWebApp
 {
-  public final static int MAX_CHOICES = 100;
   final static String C_DATER_NAME = CookieList.DaterName.toString();
   final static String C_DATER_NAME_ID = CookieList.DaterNameId.toString();
   final static String F_SURVEY_NAME = FieldList.SURVEY_NAME.toString();
   final static String F_SURVEY_DESC = FieldList.SURVEY_DESCRIPTION.toString();
   final static String F_SURVEY_ID = FieldList.SURVEY_ID.toString();
+  final static String F_USER_NAME = FieldList.USER_NAME.toString();
+  final static String F_USER_ID = FieldList.USER_NAME_ID.toString();
 
   static class CommitHandler implements ClickHandler
   {
@@ -89,8 +90,6 @@ public class BaseWebApp
           {
             resultResp = "<b>Successful created!</b><br><br>Forwarding to Survey ...";
             commitBox.resultUri = result;
-            String surId = UrlParameter.SurveyId.toString();
-            surId = Utils.getUriParameter(surId, result);
           }
           commitBox.serverResponseLabel.setHTML(resultResp);
           commitBox.dialogBox.center();
@@ -104,9 +103,8 @@ public class BaseWebApp
   static class FormHeader
   {
     TextBox nameField = new TextBox();
-    TextBox nameFieldId = new TextBox();
     FormPanel formPanel = new FormPanel();
-    VerticalPanel panel;
+    VerticalPanel panel = new VerticalPanel();
     
     boolean showEdit;
     String daterName;
@@ -115,20 +113,30 @@ public class BaseWebApp
     public FormHeader(String containerName, boolean showEdit, String surveyId, HashMap<String, String> prop)
     {
       this.showEdit = showEdit;
-      nameField.setName(FieldList.USER_NAME.toString());
-      nameFieldId.setName(FieldList.USER_NAME_ID.toString());
+      nameField.setName(F_USER_NAME);
       daterName = getCookie(C_DATER_NAME, null);
       daterNameId = getCookie(C_DATER_NAME_ID, null);
+      String daterSurveyId = CliUtils.requestSurveyId();
       if (daterName != null)
       {
         nameField.setText(daterName);
       }
       if (daterNameId != null)
-      {
+      { // Hidden field transfer.
+        TextBox nameFieldId = new TextBox();
+        nameFieldId.setName(F_USER_ID);
         nameFieldId.setText(daterNameId);
+        nameFieldId.setVisible(false);
+        panel.add(nameFieldId);
       }
-      nameFieldId.setVisible(false);
-      panel = new VerticalPanel();
+      if (daterSurveyId != null)
+      { // Hidden field.
+        TextBox surveyFieldId = new TextBox();
+        surveyFieldId.setName(F_SURVEY_ID);
+        surveyFieldId.setText(daterSurveyId);
+        surveyFieldId.setVisible(false);
+        panel.add(surveyFieldId);
+      }
       formPanel.setAction("/surveyFormHandler");  
       formPanel.setEncoding(FormPanel.ENCODING_MULTIPART);  
       formPanel.setMethod(FormPanel.METHOD_POST); 
@@ -139,7 +147,6 @@ public class BaseWebApp
       
       panel.add(new Label("Please enter your name:"));
       panel.add(nameField);
-      panel.add(nameFieldId);
       String fTitleTxt = getFieldText(prop, F_SURVEY_NAME, "Title");
       String fDescTxt = getFieldText(prop, F_SURVEY_DESC, "Description");
       if (showEdit)
@@ -183,21 +190,26 @@ public class BaseWebApp
     {
       if (!header.showEdit)
       {
-        for (int i=0; i<MAX_CHOICES; i++)
+        for (int i=0; i<Utils.MAX_CHOICES; i++)
         {
           String choiceTxt = getChoiceTxt(prop, i);
           if (choiceTxt == null) { break; }
           CheckBox b = new CheckBox(choiceTxt);
           b.setName(FieldList.CH.toString() + i);
+          String selVal = prop.get(FieldList.U_CH.toString() + i);
+          if (selVal != null && selVal.equals("on")) { b.setValue(true); }
           header.panel.add(b);
         }
       }
       else
       {
         int headerLen = header.panel.getWidgetCount();
-        for (int i=0; i<3; i++)
+        for (int i=0; i<Utils.MAX_CHOICES; i++)
         {
-          addListField(header.panel, headerLen);
+          String choiceTxt = getChoiceTxt(prop, i);
+          if (prop == null && i>2) { break; } // New
+          if (choiceTxt == null && i>2) { break; } // Edit
+          addListField(header.panel, headerLen, choiceTxt);
         }
         HorizontalPanel hp = new HorizontalPanel();
         Button plus = new Button();
@@ -222,9 +234,9 @@ public class BaseWebApp
           int count = panel.getWidgetCount();
           if (plus)
           {
-            if (count < (MAX_CHOICES + headerLen))
+            if (count < (Utils.MAX_CHOICES + headerLen))
             {
-              addListField(panel, headerLen);
+              addListField(panel, headerLen, null);
             }
           }
           else
@@ -239,10 +251,11 @@ public class BaseWebApp
       return c;
     }
     
-    private void addListField(VerticalPanel panel, int headerLen)
+    private void addListField(VerticalPanel panel, int headerLen, String choiceTxt)
     {
+      if (choiceTxt == null) { choiceTxt = "Choice"; }
       TextBox b = new TextBox();
-      b.setText("Choice");
+      b.setText(choiceTxt);
       int count = panel.getWidgetCount();
       b.setName(FieldList.CH.toString() + (count - headerLen));
       panel.add(b);

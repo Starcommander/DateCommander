@@ -2,7 +2,6 @@ package com.starcom.dater.client;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -14,6 +13,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.starcom.dater.client.CliUtils.ViewType;
 import com.starcom.dater.client.window.CommitBox;
 import com.starcom.dater.client.window.TextBoxWin;
 import com.starcom.dater.shared.Utils;
@@ -21,8 +21,6 @@ import com.starcom.dater.shared.lang.Text;
 import com.starcom.dater.shared.FieldVerifier.CookieList;
 import com.starcom.dater.shared.FieldVerifier.FieldList;
 import com.starcom.dater.shared.FieldVerifier.ReqType;
-import com.starcom.dater.shared.FieldVerifier.UrlParameter;
-import com.starcom.dater.shared.FieldVerifier.ViewType;
 
 import java.util.logging.Logger;
 
@@ -44,7 +42,7 @@ public class DaterWebApp implements EntryPoint
     String curL = com.google.gwt.i18n.client.LocaleInfo.getCurrentLocale().getLocaleName();
     Text.selectLanguage(curL);
     
-    final String surveyId = Window.Location.getParameter(UrlParameter.SurveyId.toString());
+    final String surveyId = CliUtils.requestSurveyId();
     boolean c_allowed = Boolean.parseBoolean(Cookies.getCookie(C_COOK_ALLOWED));
     if (c_allowed) { showFormTable(surveyId, ReqType.GetSurvey.toString()); }
     else
@@ -68,7 +66,7 @@ public class DaterWebApp implements EntryPoint
   
   private void showFormTable(final String surveyId, final String requestType)
   {
-    logger.fine("Execute showForm(");
+    logger.fine("Execute showFormTable(s,s)");
     String userId = Cookies.getCookie(C_DATER_NAME_ID);
     if (userId == null)
     {
@@ -104,6 +102,7 @@ public class DaterWebApp implements EntryPoint
       @Override
       public void onSuccess(String result)
       {
+        logger.fine("Execute onSuccess(s)");
         if (requestType.equals(ReqType.GetSurveyTable.toString()))
         {
           logger.info("Show as table!");
@@ -111,31 +110,32 @@ public class DaterWebApp implements EntryPoint
           return;
         }
         HashMap<String, String> prop = Utils.toHashMap(result);
-        String viewTypeS = prop.get(FieldList.VIEW_TYPE.toString());
-        if (viewTypeS == null) { viewTypeS = ViewType.NewUser.toString(); }
-        ViewType viewType = ViewType.valueOf(viewTypeS);
-        if (viewType == ViewType.Admin)
-        { // Greetings to admin
-          logger.info("Show as admin!");
-          showAdminGreeter(prop, surveyId);
-        }
-        else if (viewType == ViewType.NewUser)
+
+        CliUtils.ViewType viewType = CliUtils.requestViewTypeJS();
+        if (viewType == CliUtils.ViewType.EdChoice)
         {
+          logger.info("Show EdChoice!");
           showFormNow(prop, surveyId, false);
-          logger.info("Show as newUser!");
+        }
+        else if (viewType == CliUtils.ViewType.EdForm)
+        {
+          logger.info("Show EdForm!");
+          showFormNow(prop, surveyId, true);
         }
         else
         {
-          logger.info("Show as result!");
+          logger.info("Show ToSurvey!");
           showFormTable(surveyId, ReqType.GetSurveyTable.toString());
         }
       }
     });
   }
 
+  /** Show Result-Table */
   private void showTableNow(String input, String surveyId)
   {
     int headIndex = input.indexOf("\n-\n");
+    if (headIndex == -1) { headIndex = input.length(); }
     HashMap<String, String> prop = Utils.toHashMap(input.substring(0, headIndex));
     ArrayList<String> propTable = new ArrayList<String>();
 
@@ -145,7 +145,7 @@ public class DaterWebApp implements EntryPoint
     htmlHD.setHTML("<h2>" + fTitleTxt + "</h2><br/>" + fDescTxt);
     
     propTable.add("Name");
-    for (int i=0; i<BaseWebApp.MAX_CHOICES; i++)
+    for (int i=0; i<Utils.MAX_CHOICES; i++)
     { // Fill Header
       String v = prop.get(FieldList.CH.toString() + i);
       if (v == null) { break; }
@@ -182,35 +182,75 @@ public class DaterWebApp implements EntryPoint
         else { propTable.add(userField); }
       }
     }
+    Button editB = new Button();
+    editB.setText("<...>");
+    editB.addClickHandler(createEditHandler(prop, surveyId));
     HTML html = new HTML();
     html.setHTML(HtmlUtil.buildTable(propTable, columns).toString());
     html.addStyleName("mytable");
     RootPanel.get("formContainer").add(htmlHD);
     RootPanel.get("sendButtonContainer").add(html);
+    RootPanel.get("editButtonContainer").add(editB);
   }
   
+  private ClickHandler createEditHandler(final HashMap<String, String> prop, final String surveyId)
+  {
+    ClickHandler c = new ClickHandler()
+    {
+      @Override
+      public void onClick(ClickEvent event)
+      {
+        boolean isAdm = CliUtils.requestAdmin(prop);
+        if (isAdm)
+        {
+          showAdminGreeter(prop, surveyId);
+        }
+        else
+        {
+          showUserGreeter(prop, surveyId);
+        }
+      }
+    };
+    return c;
+  }
+
+  protected void showUserGreeter(HashMap<String, String> prop, String surveyId)
+  {
+    TextBoxWin win = new TextBoxWin("Survey-User");
+    win.setButtonText(Text.getCur().getEnterSurvey());
+    win.setText(Text.getCur().getGreetUsrHtml());
+    Button editB = new Button();
+    editB.setText(Text.getCur().getEditSurveyChoice());
+    editB.addClickHandler(createToFormClick(false, surveyId));
+    win.addExtraButton(editB);
+    win.showBox();
+  }
+
   private void showAdminGreeter(HashMap<String, String> prop, String surveyId)
   {
     TextBoxWin win = new TextBoxWin("Survey-Admin");
     win.setButtonText(Text.getCur().getEnterSurvey());
-    win.onClose(createClickHandler(false, prop, surveyId));
+    win.onClose(createToFormClick(false, surveyId));
     win.setText(Text.getCur().getGreetAdminHtml());
     Button editB = new Button();
-    editB.setText(Text.getCur().getEditSurvey());
-    editB.addClickHandler(createClickHandler(true, prop, surveyId));
+    editB.setText(Text.getCur().getEditSurveyForm());
+    editB.addClickHandler(createToFormClick(true, surveyId));
     win.addExtraButton(editB);
+    Button closeB = new Button();
+    closeB.setText(Text.getCur().getClose());
+    win.addExtraButton(closeB);
     win.showBox();
   }
   
-  private ClickHandler createClickHandler(final boolean adm,
-      final HashMap<String, String> prop, final String surveyId)
+  private ClickHandler createToFormClick(final boolean editForm, final String surveyId)
   {
     ClickHandler h = new ClickHandler()
     {
       @Override
       public void onClick(ClickEvent event)
       {
-        showFormNow(prop, surveyId, adm);
+        if (editForm) { CliUtils.gotoUrl(surveyId, ViewType.EdForm); }
+        else { CliUtils.gotoUrl(surveyId, ViewType.EdChoice); }
       }
     };
     return h;

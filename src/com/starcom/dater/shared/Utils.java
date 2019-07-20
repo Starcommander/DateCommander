@@ -8,24 +8,14 @@ import com.google.gwt.user.client.ui.HTML;
 
 public class Utils
 {
+  public final static int MAX_CHOICES = 100;
+  
   public static String generateID()
   {
     // TODO: Drop some letters into the id, for more security.
     long dateNow = new Date().getTime();
     long random = (long)(Math.random() * 1000.0 * 1000.0 * 1000.0);
     return dateNow + "-" + random;
-  }
-
-  public static String getUriParameter(String key, String uri)
-  {
-    for (String curParam : uri.split("\\&|\\?"))
-    {
-      if (curParam.startsWith(key + "="))
-      {
-        return curParam.substring(curParam.indexOf("=") + 1);
-      }
-    }
-    return null;
   }
   
   public static HashMap<String,String> toHashMap(String s)
