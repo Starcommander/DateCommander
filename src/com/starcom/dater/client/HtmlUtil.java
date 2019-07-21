@@ -10,16 +10,34 @@ public class HtmlUtil
     sb.append("<table>");
     int curCol = 0;
     String tab = "th";
+    String tabClass = " class='mylittleborder'";
+    boolean firstL = true;
+    boolean firstE = true;
     for (String val : entries)
     {
-      val = escapeHtml(val); // TODO: Dont escape here, maybe in html
+      val = escapeHtml(val); // TODO: Dont escape all here, maybe in html
       if (curCol%col == 0) { sb.append("<tr>"); }
-      sb.append("<"+tab+">").append(val).append("</"+tab+">");
+      sb.append("<"+tab+tabClass+">");
+      doRotate(sb, val, firstL && (!firstE));
+      sb.append("</"+tab+">");
       curCol ++;
-      if (curCol%col == 0) { sb.append("</tr>"); tab = "td"; }
+      if (firstE) { firstE = false; }
+      if (curCol%col == 0) { sb.append("</tr>"); tab = "td";  firstL = false; }
     }
     sb.append("</table>");
     return sb;
+  }
+  
+  private static void doRotate(StringBuilder sb, String htmlLine, boolean rotate)
+  {
+    if (!rotate) { sb.append(htmlLine); }
+    else
+    {
+      for (char c : htmlLine.toCharArray())
+      {
+        sb.append("<div class='myrotate'>").append(c).append("</div><br/>");
+      }
+    }
   }
   
   private static String escapeHtml(String html)

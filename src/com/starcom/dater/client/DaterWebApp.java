@@ -187,7 +187,7 @@ public class DaterWebApp implements EntryPoint
     editB.addClickHandler(createEditHandler(prop, surveyId));
     HTML html = new HTML();
     html.setHTML(HtmlUtil.buildTable(propTable, columns).toString());
-    html.addStyleName("mytable");
+    html.addStyleName("myhugeborder");
     RootPanel.get("formContainer").add(htmlHD);
     RootPanel.get("sendButtonContainer").add(html);
     RootPanel.get("editButtonContainer").add(editB);
