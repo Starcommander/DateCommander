@@ -1,0 +1,11 @@
+Package: tomcat8-dater-app
+Version: 0.1
+Architecture: all
+Maintainer: Paul Kashofer <Starcommander@gmx.at>
+Installed-Size: 200
+Depends: tomcat8
+Conflicts: tomcat9
+Priority: optional
+Description: A small web-app for creating a survey. toolbox-style utilities for Debian systems
+ It is similar to doodle, and very simple.
+ Written with the google web-toolkit gwt.

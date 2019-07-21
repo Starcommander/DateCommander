@@ -1,0 +1,5 @@
+<Context path="/dater"
+         docBase="/usr/share/tomcat8-dater/dater">
+  <!-- Enable symlinks for the jars linked from /usr/share/java -->
+  <Resources allowLinking="true"/>
+</Context>
