@@ -28,7 +28,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class BaseWebApp
+public class FormWebApp
 {
   final static String C_DATER_NAME = CookieList.DaterName.toString();
   final static String C_DATER_NAME_ID = CookieList.DaterNameId.toString();

@@ -5,7 +5,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.HashMap;
 
-import com.google.gwt.core.client.GWT;
+import javax.servlet.http.HttpServletRequest;
+
+import com.starcom.dater.client.DaterWebApp;
 import com.starcom.dater.shared.FieldVerifier;
 import com.starcom.dater.shared.FieldVerifier.AnalyzerResult;
 import com.starcom.dater.shared.FieldVerifier.FieldList;
@@ -171,6 +173,14 @@ public class ServUtils
       throw new IllegalStateException("Missing working dir root!");
     }
     return target;
+  }
+
+  public static String getServerHost(HttpServletRequest request)
+  {
+    String htmlFile = DaterWebApp.class.getSimpleName() + ".html";
+    String reqUrl = request.getRequestURL().toString();
+    reqUrl = reqUrl.substring(0, reqUrl.lastIndexOf('/'));
+    return reqUrl + "/" + htmlFile;
   }
   
 //  public static boolean hasWorkingDir(String subDir)

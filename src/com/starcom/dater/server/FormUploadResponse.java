@@ -27,11 +27,8 @@ import com.starcom.dater.shared.Utils;
 /**
  * Servlet implementation class for Servlet: UploadFileServlet
  */
-public class FileUploadResponse extends HttpServlet implements Servlet
+public class FormUploadResponse extends HttpServlet implements Servlet
 {
-  // TODO: Read serverHost from config, or request.getRequestURL();
-  // TODO: Rename to FormUploadResponse.
-  public static final String serverHost = "http://127.0.0.1:8888/DaterWebApp.html";
   private static final long serialVersionUID = 8305367618713715640L;
 
   protected void doPost(HttpServletRequest request,
@@ -64,7 +61,7 @@ public class FileUploadResponse extends HttpServlet implements Servlet
       if (sOk && aOk)
       {
         String param = "?" + UrlParameter.SurveyId.toString() + "=" + surveyId;
-        response.getWriter().write(serverHost + param);
+        response.getWriter().write(ServUtils.getServerHost(request) + param);
       }
       else
       {
@@ -81,7 +78,7 @@ public class FileUploadResponse extends HttpServlet implements Servlet
       if (sOk)
       {
         String param = "?" + UrlParameter.SurveyId.toString() + "=" + surveyId;
-        response.getWriter().write(serverHost + param);
+        response.getWriter().write(ServUtils.getServerHost(request) + param);
       }
       else
       {
@@ -97,7 +94,7 @@ public class FileUploadResponse extends HttpServlet implements Servlet
       if (sOk)
       {
         String param = "?" + UrlParameter.SurveyId.toString() + "=" + surveyId;
-        response.getWriter().write(serverHost + param);
+        response.getWriter().write(ServUtils.getServerHost(request) + param);
       }
       else
       {

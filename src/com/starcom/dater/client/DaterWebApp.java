@@ -263,13 +263,13 @@ public class DaterWebApp implements EntryPoint
     sendButton.addStyleName("sendButton");
     
     boolean showAsEdit = forceEdit || (surveyId==null);
-    BaseWebApp.FormHeader formHeader = new BaseWebApp.FormHeader("formContainer", showAsEdit, surveyId, prop);
-    BaseWebApp.FormBody formBody = new BaseWebApp.FormBody("editButtonContainer", formHeader, prop);
+    FormWebApp.FormHeader formHeader = new FormWebApp.FormHeader("formContainer", showAsEdit, surveyId, prop);
+    FormWebApp.FormBody formBody = new FormWebApp.FormBody("editButtonContainer", formHeader, prop);
     RootPanel.get("sendButtonContainer").add(sendButton);
     RootPanel.get("errorLabelContainer").add(errorLabel);
     
     CommitBox commitBox = new CommitBox(sendButton);
-    BaseWebApp.CommitHandler handler = new BaseWebApp.CommitHandler(commitBox, formHeader, formBody, errorLabel);
+    FormWebApp.CommitHandler handler = new FormWebApp.CommitHandler(commitBox, formHeader, formBody, errorLabel);
     sendButton.addClickHandler(handler);
   }
 }
