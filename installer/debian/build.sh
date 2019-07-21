@@ -16,6 +16,7 @@ do_clean()
 {
   if [ -d $APP_DIR ]; then
     rm -r -f $APP_DIR
+    echo "Purged: $APP_DIR"
   fi
 }
 
@@ -26,3 +27,4 @@ do_check ./target
 do_clean
 cp -r $APP_SRC $APP_DIR
 dpkg-deb -b data/ target/date-commander.deb
+do_clean

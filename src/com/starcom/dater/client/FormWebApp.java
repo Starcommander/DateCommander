@@ -7,6 +7,7 @@ import com.starcom.dater.shared.Utils;
 import com.starcom.dater.client.window.CommitBox;
 import java.util.HashMap;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Cookies;
@@ -137,9 +138,10 @@ public class FormWebApp
         surveyFieldId.setVisible(false);
         panel.add(surveyFieldId);
       }
-      formPanel.setAction("/surveyFormHandler");  
-      formPanel.setEncoding(FormPanel.ENCODING_MULTIPART);  
-      formPanel.setMethod(FormPanel.METHOD_POST); 
+      String href = GWT.getHostPageBaseURL()+"daterwebapp/surveyFormHandler";
+      formPanel.setAction(href);
+      formPanel.setEncoding(FormPanel.ENCODING_MULTIPART);
+      formPanel.setMethod(FormPanel.METHOD_POST);
       formPanel.setWidget(panel);
       DecoratorPanel decoratorPanel = new DecoratorPanel();
       decoratorPanel.add(formPanel);

@@ -6,6 +6,9 @@ Installed-Size: 200
 Depends: tomcat8
 Conflicts: tomcat9
 Priority: optional
-Description: A small web-app for creating a survey. toolbox-style utilities for Debian systems
+Description: A small web-app for creating a survey.
  It is similar to doodle, and very simple.
  Written with the google web-toolkit gwt.
+ .
+ After installation the web-app is accessable at localhost:8080/dater
+ For Web-Access the port 8080 must be open on firewall.

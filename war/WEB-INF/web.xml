@@ -11,8 +11,8 @@
     <servlet-class>com.starcom.dater.server.GreetingServiceImpl</servlet-class>
   </servlet>
   <servlet>
-    <servlet-name>fileUploadServlet</servlet-name>
-    <servlet-class>com.starcom.dater.server.FileUploadResponse</servlet-class>
+    <servlet-name>formUploadServlet</servlet-name>
+    <servlet-class>com.starcom.dater.server.FormUploadResponse</servlet-class>
   </servlet>
   
   <servlet-mapping>
@@ -20,8 +20,8 @@
     <url-pattern>/daterwebapp/greet</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>fileUploadServlet</servlet-name>
-    <url-pattern>/surveyFormHandler</url-pattern>
+    <servlet-name>formUploadServlet</servlet-name>
+    <url-pattern>/daterwebapp/surveyFormHandler</url-pattern>
   </servlet-mapping>
   
   <!-- Default page to serve -->

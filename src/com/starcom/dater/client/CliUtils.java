@@ -2,9 +2,11 @@ package com.starcom.dater.client;
 
 import java.util.HashMap;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.starcom.dater.shared.FieldVerifier.FieldList;
 import com.starcom.dater.shared.FieldVerifier.UrlParameter;
+import com.starcom.dater.shared.WebXml;
 
 public class CliUtils
 {
@@ -29,8 +31,13 @@ public class CliUtils
   
   public static void gotoUrl(String surveyId, ViewType viewType)
   {
-    StringBuilder url = new StringBuilder(Window.Location.getProtocol());
-    url.append("//").append(Window.Location.getHost());
+    StringBuilder url = new StringBuilder(GWT.getModuleBaseURL());
+    if (!url.toString().endsWith(WebXml.DATER_BASE))
+    {
+      throw new IllegalArgumentException("Base url wrong: " + url);
+    }
+    int end = url.length() - WebXml.DATER_BASE.length();
+    url = new StringBuilder(url.substring(0, end));
     url.append("?").append(UrlParameter.SurveyId.toString()).append("=").append(surveyId);
     url.append("&").append(UrlParameter.ViewType.toString()).append("=").append(viewType.toString());
     Window.Location.replace(url.toString());

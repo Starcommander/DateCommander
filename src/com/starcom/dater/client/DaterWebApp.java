@@ -217,10 +217,16 @@ public class DaterWebApp implements EntryPoint
   protected void showUserGreeter(HashMap<String, String> prop, String surveyId)
   {
     TextBoxWin win = new TextBoxWin("Survey-User");
-    win.setButtonText(Text.getCur().getEnterSurvey());
     win.setText(Text.getCur().getGreetUsrHtml());
     Button editB = new Button();
-    editB.setText(Text.getCur().getEditSurveyChoice());
+    if (CliUtils.requestNewUser(prop))
+    {
+      editB.setText(Text.getCur().getEnterSurvey());
+    }
+    else
+    {
+      editB.setText(Text.getCur().getEditSurveyChoice());
+    }
     editB.addClickHandler(createToFormClick(false, surveyId));
     win.addExtraButton(editB);
     win.showBox();
@@ -229,7 +235,14 @@ public class DaterWebApp implements EntryPoint
   private void showAdminGreeter(HashMap<String, String> prop, String surveyId)
   {
     TextBoxWin win = new TextBoxWin("Survey-Admin");
-    win.setButtonText(Text.getCur().getEnterSurvey());
+    if (CliUtils.requestNewUser(prop))
+    {
+      win.setButtonText(Text.getCur().getEnterSurvey());
+    }
+    else
+    {
+      win.setButtonText(Text.getCur().getEditSurveyChoice());
+    }
     win.onClose(createToFormClick(false, surveyId));
     win.setText(Text.getCur().getGreetAdminHtml());
     Button editB = new Button();

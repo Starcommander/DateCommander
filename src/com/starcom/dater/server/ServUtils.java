@@ -3,6 +3,8 @@ package com.starcom.dater.server;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +13,7 @@ import com.starcom.dater.client.DaterWebApp;
 import com.starcom.dater.shared.FieldVerifier;
 import com.starcom.dater.shared.FieldVerifier.AnalyzerResult;
 import com.starcom.dater.shared.FieldVerifier.FieldList;
+import com.starcom.dater.shared.WebXml;
 
 public class ServUtils
 {
@@ -77,7 +80,7 @@ public class ServUtils
     File userDir = new File(workDir, USER_SUB_DIR);
     if (!workDir.exists()) { throw new IllegalStateException("Assume existing Survey!"); }
     if (!userDir.exists()) { throw new IllegalStateException("Assume existing Survey usr!"); }
-    return new File(userDir, userId).exists();
+    return !new File(userDir, userId).exists();
   }
   
   public static StringBuilder readTextFile(File file)
@@ -165,8 +168,10 @@ public class ServUtils
   /** Get root working dir, ensures existing. */
   public static File getWorkingDirRoot()
   {
+    String dot = ".";
     String dir = System.getProperty("user.home");
-    File target = new File(dir, ".daterserver");
+    if (!new File(dir).canWrite()) { dir = "/var/lib/"; dot = ""; }
+    File target = new File(dir, dot + "daterserver");
     if (!target.exists()) { target.mkdir(); }
     if (!target.isDirectory())
     {
@@ -175,18 +180,19 @@ public class ServUtils
     return target;
   }
 
-  public static String getServerHost(HttpServletRequest request)
+  public static String getServerHost(HttpServletRequest request) throws MalformedURLException
   {
     String htmlFile = DaterWebApp.class.getSimpleName() + ".html";
     String reqUrl = request.getRequestURL().toString();
-    reqUrl = reqUrl.substring(0, reqUrl.lastIndexOf('/'));
+    if (reqUrl.endsWith(WebXml.FORM_HANDLER))
+    {
+      int end = reqUrl.length() - WebXml.FORM_HANDLER.length();
+      reqUrl = reqUrl.substring(0, end);
+    }
+    else
+    {
+      throw new IllegalArgumentException("Request service not known: " + reqUrl);
+    }
     return reqUrl + "/" + htmlFile;
   }
-  
-//  public static boolean hasWorkingDir(String subDir)
-//  {
-//    String dir = System.getProperty("user.home");
-//    String sep = File.separator;
-//    return new File(dir, ".daterserver" + sep + subDir + sep + MAIN_FILE).isFile();
-//  }
 }
