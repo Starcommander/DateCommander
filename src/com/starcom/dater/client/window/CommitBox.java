@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.starcom.dater.shared.lang.Text;
 
 public class CommitBox
 {
@@ -28,9 +29,9 @@ public class CommitBox
     closeButton.getElement().setId("closeButton");
     VerticalPanel dialogVPanel = new VerticalPanel();
     dialogVPanel.addStyleName("dialogVPanel");
-    dialogVPanel.add(new HTML("<b>Sending name to the server:</b>"));
+    dialogVPanel.add(new HTML("<b>" + Text.getCur().getSendToServer() + "</b>"));
     dialogVPanel.add(textToServerLabel);
-    dialogVPanel.add(new HTML("<br><b>Server replies:</b>"));
+    dialogVPanel.add(new HTML("<br><b>" + Text.getCur().getServerReplies() + "</b>"));
     dialogVPanel.add(serverResponseLabel);
     dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
     dialogVPanel.add(closeButton);

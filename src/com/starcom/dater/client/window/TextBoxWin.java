@@ -6,12 +6,13 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.starcom.dater.shared.lang.Text;
 
 public class TextBoxWin implements ClickHandler
 {
   private DialogBox dialogBox = new DialogBox();
   private HTML htmlTextLabel = new HTML();
-  private Button closeButton = new Button("Close");
+  private Button closeButton = new Button(Text.getCur().getClose());
   VerticalPanel dialogVPanel = new VerticalPanel();
   
   public TextBoxWin(String title)
@@ -31,7 +32,7 @@ public class TextBoxWin implements ClickHandler
     dialogBox.hide();
   }
   
-  public void setText(String htmlText)
+  public void setTextHtml(String htmlText)
   {
     htmlTextLabel.setHTML(htmlText);
   }

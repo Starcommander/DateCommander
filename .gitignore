@@ -1,2 +1,5 @@
 /gwt-unitCache/*
 /war/WEB-INF/classes/*
+/installer/debian/target
+/war/daterwebapp
+/war/WEB-INF/deploy/

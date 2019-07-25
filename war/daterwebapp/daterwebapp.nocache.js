@@ -1,27 +1,67 @@
-function daterwebapp(){var S='bootstrap',T='begin',U='gwt.codesvr.daterwebapp=',V='gwt.codesvr=',W='daterwebapp',X='startup',Y='DUMMY',Z=0,$=1,_='iframe',ab='position:absolute; width:0; height:0; border:none; left: -1000px;',bb=' top: -1000px;',cb='CSS1Compat',db='<!doctype html>',eb='',fb='<html><head><\/head><body><\/body><\/html>',gb='undefined',hb='readystatechange',ib=10,jb='Chrome',kb='eval("',lb='");',mb='script',nb='javascript',ob='moduleStartup',pb='moduleRequested',qb='Failed to load ',rb='head',sb='meta',tb='name',ub='daterwebapp::',vb='::',wb='gwt:property',xb='content',yb='=',zb='gwt:onPropertyErrorFn',Ab='Bad handler "',Bb='" for "gwt:onPropertyErrorFn"',Cb='gwt:onLoadErrorFn',Db='" for "gwt:onLoadErrorFn"',Eb='#',Fb='?',Gb='/',Hb='img',Ib='clear.cache.gif',Jb='baseUrl',Kb='daterwebapp.nocache.js',Lb='base',Mb='//',Nb='locale',Ob='default',Pb='locale=',Qb=7,Rb='&',Sb='_',Tb='__gwt_Locale',Ub='Unexpected exception in locale detection, using default: ',Vb=2,Wb='user.agent',Xb='webkit',Yb='safari',Zb='msie',$b=11,_b='ie10',ac=9,bc='ie9',cc=8,dc='ie8',ec='gecko',fc='gecko1_8',gc=3,hc=4,ic='selectingPermutation',jc='daterwebapp.devmode.js',kc='de',lc='24D6E6B676A9E89590844F286C0AAF80',mc='31A81EB9E4DADA280021F3CEC71C392E',nc='34DB50497F01F5ED71026EDCC81BD5EB',oc='en',pc='4F5BEFD239D8F52E5ADC7E6EBD25CC68',qc='6CD0AE7D1D967EBE8DD6CFB5BD782E59',rc='754D2F4EB651011A70873BC86E5ABD6F',sc='81B80B579017C2DE1F3186B16A33AE2E',tc='8873E2272D8C10E9D014D03095BC6143',uc='8E04414991D23D9AF3B396F727A2E80E',vc='A5C05080029AD54A343FF9C0223AEC99',wc='B1CCE666E750FA94854E606CEE5D41F4',xc='B51B4E93175F99872B7862B8E39FC00C',yc='C44BE26AF7A66EF1652BAB1034F81086',zc='C84EC288C76A0AEAFC72B3DB6B2D0923',Ac='EA7F979B523A6DC07E82CB7DD37A654B',Bc=':',Cc='.cache.js',Dc='link',Ec='rel',Fc='stylesheet',Gc='href',Hc='loadExternalRefs',Ic='gwt/clean/clean.css',Jc='end',Kc='http:',Lc='file:',Mc='_gwt_dummy_',Nc='__gwtDevModeHook:daterwebapp',Oc='Ignoring non-whitelisted Dev Mode URL: ',Pc=':moduleBase';var s=window;var t=document;v(S,T);function u(){var a=s.location.search;return a.indexOf(U)!=-1||a.indexOf(V)!=-1}
-function v(a,b){if(s.__gwtStatsEvent){s.__gwtStatsEvent({moduleName:W,sessionId:s.__gwtStatsSessionId,subSystem:X,evtGroup:a,millis:(new Date).getTime(),type:b})}}
-daterwebapp.__sendStats=v;daterwebapp.__moduleName=W;daterwebapp.__errFn=null;daterwebapp.__moduleBase=Y;daterwebapp.__softPermutationId=Z;daterwebapp.__computePropValue=null;daterwebapp.__getPropMap=null;daterwebapp.__installRunAsyncCode=function(){};daterwebapp.__gwtStartLoadingFragment=function(){return null};daterwebapp.__gwt_isKnownPropertyValue=function(){return false};daterwebapp.__gwt_getMetaProperty=function(){return null};var w=null;var A=s.__gwt_activeModules=s.__gwt_activeModules||{};A[W]={moduleName:W};daterwebapp.__moduleStartupDone=function(e){var f=A[W].bindings;A[W].bindings=function(){var a=f?f():{};var b=e[daterwebapp.__softPermutationId];for(var c=Z;c<b.length;c++){var d=b[c];a[d[Z]]=d[$]}return a}};var B;function C(){D();return B}
-function D(){if(B){return}var a=t.createElement(_);a.id=W;a.style.cssText=ab+bb;a.tabIndex=-1;t.body.appendChild(a);B=a.contentWindow.document;B.open();var b=document.compatMode==cb?db:eb;B.write(b+fb);B.close()}
-function F(k){function l(a){function b(){if(typeof t.readyState==gb){return typeof t.body!=gb&&t.body!=null}return /loaded|complete/.test(t.readyState)}
-var c=b();if(c){a();return}function d(){if(!c){if(!b()){return}c=true;a();if(t.removeEventListener){t.removeEventListener(hb,d,false)}if(e){clearInterval(e)}}}
-if(t.addEventListener){t.addEventListener(hb,d,false)}var e=setInterval(function(){d()},ib)}
-function m(c){function d(a,b){a.removeChild(b)}
-var e=C();var f=e.body;var g;if(navigator.userAgent.indexOf(jb)>-1&&window.JSON){var h=e.createDocumentFragment();h.appendChild(e.createTextNode(kb));for(var i=Z;i<c.length;i++){var j=window.JSON.stringify(c[i]);h.appendChild(e.createTextNode(j.substring($,j.length-$)))}h.appendChild(e.createTextNode(lb));g=e.createElement(mb);g.language=nb;g.appendChild(h);f.appendChild(g);d(f,g)}else{for(var i=Z;i<c.length;i++){g=e.createElement(mb);g.language=nb;g.text=c[i];f.appendChild(g);d(f,g)}}}
-daterwebapp.onScriptDownloaded=function(a){l(function(){m(a)})};v(ob,pb);var n=t.createElement(mb);n.src=k;if(daterwebapp.__errFn){n.onerror=function(){daterwebapp.__errFn(W,new Error(qb+code))}}t.getElementsByTagName(rb)[Z].appendChild(n)}
-daterwebapp.__startLoadingFragment=function(a){return I(a)};daterwebapp.__installRunAsyncCode=function(a){var b=C();var c=b.body;var d=b.createElement(mb);d.language=nb;d.text=a;c.appendChild(d);c.removeChild(d)};function G(){var c={};var d;var e;var f=t.getElementsByTagName(sb);for(var g=Z,h=f.length;g<h;++g){var i=f[g],j=i.getAttribute(tb),k;if(j){j=j.replace(ub,eb);if(j.indexOf(vb)>=Z){continue}if(j==wb){k=i.getAttribute(xb);if(k){var l,m=k.indexOf(yb);if(m>=Z){j=k.substring(Z,m);l=k.substring(m+$)}else{j=k;l=eb}c[j]=l}}else if(j==zb){k=i.getAttribute(xb);if(k){try{d=eval(k)}catch(a){alert(Ab+k+Bb)}}}else if(j==Cb){k=i.getAttribute(xb);if(k){try{e=eval(k)}catch(a){alert(Ab+k+Db)}}}}}__gwt_getMetaProperty=function(a){var b=c[a];return b==null?null:b};w=d;daterwebapp.__errFn=e}
-function H(){function e(a){var b=a.lastIndexOf(Eb);if(b==-1){b=a.length}var c=a.indexOf(Fb);if(c==-1){c=a.length}var d=a.lastIndexOf(Gb,Math.min(c,b));return d>=Z?a.substring(Z,d+$):eb}
-function f(a){if(a.match(/^\w+:\/\//)){}else{var b=t.createElement(Hb);b.src=a+Ib;a=e(b.src)}return a}
-function g(){var a=__gwt_getMetaProperty(Jb);if(a!=null){return a}return eb}
-function h(){var a=t.getElementsByTagName(mb);for(var b=Z;b<a.length;++b){if(a[b].src.indexOf(Kb)!=-1){return e(a[b].src)}}return eb}
-function i(){var a=t.getElementsByTagName(Lb);if(a.length>Z){return a[a.length-$].href}return eb}
-function j(){var a=t.location;return a.href==a.protocol+Mb+a.host+a.pathname+a.search+a.hash}
-var k=g();if(k==eb){k=h()}if(k==eb){k=i()}if(k==eb&&j()){k=e(t.location.href)}k=f(k);return k}
-function I(a){if(a.match(/^\//)){return a}if(a.match(/^[a-zA-Z]+:\/\//)){return a}return daterwebapp.__moduleBase+a}
-function J(){var k=[];var l=Z;function m(a,b){var c=k;for(var d=Z,e=a.length-$;d<e;++d){c=c[a[d]]||(c[a[d]]=[])}c[a[e]]=b}
-var n=[];var o=[];function p(a){var b=o[a](),c=n[a];if(b in c){return b}var d=[];for(var e in c){d[c[e]]=e}if(w){w(a,d,b)}throw null}
-o[Nb]=function(){var b=null;var c=Ob;try{if(!b){var d=location.search;var e=d.indexOf(Pb);if(e>=Z){var f=d.substring(e+Qb);var g=d.indexOf(Rb,e);if(g<Z){g=d.length}b=d.substring(e+Qb,g)}}if(!b){b=__gwt_getMetaProperty(Nb)}if(!b){var h=navigator.browserLanguage?navigator.browserLanguage:navigator.language;if(h){var i=h.split(/[-_]/);if(i.length>$){i[$]=i[$].toUpperCase()}b=i.join(Sb)}}if(!b){b=s[Tb]}if(b){c=b}while(b&&!__gwt_isKnownPropertyValue(Nb,b)){var j=b.lastIndexOf(Sb);if(j<Z){b=null;break}b=b.substring(Z,j)}}catch(a){alert(Ub+a)}s[Tb]=c;return b||Ob};n[Nb]={'de':Z,'default':$,'en':Vb};o[Wb]=function(){var a=navigator.userAgent.toLowerCase();var b=t.documentMode;if(function(){return a.indexOf(Xb)!=-1}())return Yb;if(function(){return a.indexOf(Zb)!=-1&&(b>=ib&&b<$b)}())return _b;if(function(){return a.indexOf(Zb)!=-1&&(b>=ac&&b<$b)}())return bc;if(function(){return a.indexOf(Zb)!=-1&&(b>=cc&&b<$b)}())return dc;if(function(){return a.indexOf(ec)!=-1||b>=$b}())return fc;return eb};n[Wb]={'gecko1_8':Z,'ie10':$,'ie8':Vb,'ie9':gc,'safari':hc};__gwt_isKnownPropertyValue=function(a,b){return b in n[a]};daterwebapp.__getPropMap=function(){var a={};for(var b in n){if(n.hasOwnProperty(b)){a[b]=p(b)}}return a};daterwebapp.__computePropValue=p;s.__gwt_activeModules[W].bindings=daterwebapp.__getPropMap;v(S,ic);if(u()){return I(jc)}var q;try{m([kc,bc],lc);m([Ob,dc],mc);m([kc,fc],nc);m([oc,bc],pc);m([Ob,bc],qc);m([oc,fc],rc);m([kc,Yb],sc);m([Ob,fc],tc);m([oc,_b],uc);m([oc,Yb],vc);m([kc,dc],wc);m([oc,dc],xc);m([Ob,_b],yc);m([Ob,Yb],zc);m([kc,_b],Ac);q=k[p(Nb)][p(Wb)];var r=q.indexOf(Bc);if(r!=-1){l=parseInt(q.substring(r+$),ib);q=q.substring(Z,r)}}catch(a){}daterwebapp.__softPermutationId=l;return I(q+Cc)}
-function K(){if(!s.__gwt_stylesLoaded){s.__gwt_stylesLoaded={}}function c(a){if(!__gwt_stylesLoaded[a]){var b=t.createElement(Dc);b.setAttribute(Ec,Fc);b.setAttribute(Gc,I(a));t.getElementsByTagName(rb)[Z].appendChild(b);__gwt_stylesLoaded[a]=true}}
-v(Hc,T);c(Ic);v(Hc,Jc)}
-G();daterwebapp.__moduleBase=H();A[W].moduleBase=daterwebapp.__moduleBase;var L=J();if(s){var M=!!(s.location.protocol==Kc||s.location.protocol==Lc);s.__gwt_activeModules[W].canRedirect=M;function N(){var b=Mc;try{s.sessionStorage.setItem(b,b);s.sessionStorage.removeItem(b);return true}catch(a){return false}}
-if(M&&N()){var O=Nc;var P=s.sessionStorage[O];if(!/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?\/.*$/.test(P)){if(P&&(window.console&&console.log)){console.log(Oc+P)}P=eb}if(P&&!s[O]){s[O]=true;s[O+Pc]=H();var Q=t.createElement(mb);Q.src=P;var R=t.getElementsByTagName(rb)[Z];R.insertBefore(Q,R.firstElementChild||R.children[Z]);return false}}}K();v(S,Jc);F(L);return true}
-daterwebapp.succeeded=daterwebapp();
+/*
+ * Copyright 2014 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+
+/**
+ * This startup script is used when we run superdevmode from an app server.
+ */
+(function($wnd, $doc){
+  // document.head does not exist in IE8
+  var $head = $doc.head || $doc.getElementsByTagName('head')[0];
+  // Compute some codeserver urls so as the user does not need bookmarklets
+  var hostName = $wnd.location.hostname;
+  var serverUrl = 'http://' + hostName + ':9876';
+  var module = 'daterwebapp';
+  var nocacheUrl = serverUrl + '/recompile-requester/' + module;
+
+  // Insert the superdevmode nocache script in the first position of the head
+  var devModeScript = $doc.createElement('script');
+  devModeScript.src = nocacheUrl;
+
+  // Everybody except IE8 does fire an error event
+  // This means that we do not detect a non running SDM with IE8.
+  if (devModeScript.addEventListener) {
+    var callback = function() {
+      // Don't show the confirmation dialogue twice (multimodule)
+      if (!$wnd.__gwt__sdm__confirmed &&
+           (!$wnd.__gwt_sdm__recompiler || !$wnd.__gwt_sdm__recompiler.loaded)) {
+        $wnd.__gwt__sdm__confirmed = true;
+        if ($wnd.confirm(
+            "Couldn't load " +  module + " from Super Dev Mode\n" +
+            "server at " + serverUrl + ".\n" +
+            "Please make sure this server is ready.\n" +
+            "Do you want to try again?")) {
+          $wnd.location.reload();
+        }
+      }
+    };
+    devModeScript.addEventListener("error", callback, true);
+  }
+
+  var injectScriptTag = function(){
+    $head.insertBefore(devModeScript, $head.firstElementChild || $head.children[0]);
+  };
+
+  if (/loaded|complete/.test($doc.readyState)) {
+    injectScriptTag();
+  } else {
+    //defer app script insertion until the body is ready
+    if($wnd.addEventListener){
+      $wnd.addEventListener('load', injectScriptTag, false);
+    } else{
+      $wnd.attachEvent('onload', injectScriptTag);
+    }
+  }
+})(window, document);

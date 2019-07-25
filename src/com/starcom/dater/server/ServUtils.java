@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;

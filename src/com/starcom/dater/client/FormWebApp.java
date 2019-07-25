@@ -3,17 +3,18 @@ package com.starcom.dater.client;
 import com.starcom.dater.shared.FieldVerifier;
 import com.starcom.dater.shared.FieldVerifier.CookieList;
 import com.starcom.dater.shared.FieldVerifier.FieldList;
+import com.starcom.dater.shared.lang.Text;
 import com.starcom.dater.shared.Utils;
 import com.starcom.dater.client.window.CommitBox;
+import com.starcom.dater.client.window.ui.MultiCheckBox;
+
 import java.util.HashMap;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
@@ -60,7 +61,7 @@ public class FormWebApp
       String text_name = formHeader.nameField.getText();
       if (!FieldVerifier.isValidName(text_name))
       {
-        errorLabel.setText("Please enter at least four characters");
+        errorLabel.setText(Text.getCur().getName() + ": " + Text.getCur().getLeastFourChars());
         return;
       }
       Cookies.setCookie(C_DATER_NAME, text_name, Utils.getDateInYears());
@@ -82,17 +83,17 @@ public class FormWebApp
         public void onSubmitComplete(SubmitCompleteEvent ev)
         {
           String result = ev.getResults();
-          if (result == null) { result = "No result from server!"; }
+          if (result == null) { result = Text.getCur().getNoResultFromServer(); }
           result = Utils.htmlToText(result);
           commitBox.dialogBox.setText("Remote Procedure Call");
           commitBox.serverResponseLabel.removeStyleName("serverResponseLabelError");
           String resultResp = result;
           if (result.startsWith("http://") || result.startsWith("https://"))
           {
-            resultResp = "<b>Successful created!</b><br><br>Forwarding to Survey ...";
+            resultResp = "\n" + Text.getCur().getSuccessfulCreated() + "\n\n" + Text.getCur().getForwardingToSurvey();
             commitBox.resultUri = result;
           }
-          commitBox.serverResponseLabel.setHTML(resultResp);
+          commitBox.serverResponseLabel.setText(resultResp);
           commitBox.dialogBox.center();
           commitBox.closeButton.setFocus(true);
         }
@@ -147,10 +148,10 @@ public class FormWebApp
       decoratorPanel.add(formPanel);
       RootPanel.get(containerName).add(decoratorPanel);
       
-      panel.add(new Label("Please enter your name:"));
+      panel.add(new Label(Text.getCur().getEnterName()));
       panel.add(nameField);
-      String fTitleTxt = getFieldText(prop, F_SURVEY_NAME, "Title");
-      String fDescTxt = getFieldText(prop, F_SURVEY_DESC, "Description");
+      String fTitleTxt = getFieldText(prop, F_SURVEY_NAME, Text.getCur().getTitle());
+      String fDescTxt = getFieldText(prop, F_SURVEY_DESC, Text.getCur().getDescription());
       if (showEdit)
       {
         TextBox surveyField = new TextBox();
@@ -159,7 +160,7 @@ public class FormWebApp
         TextArea surveyDescription = new TextArea();
         surveyDescription.setName(F_SURVEY_DESC);
         surveyDescription.setText(fDescTxt);
-        panel.add(new Label("Please enter survey\ntitle and description:"));
+        panel.add(new Label(Text.getCur().getEnterTitleDescription()));
         panel.add(surveyField);
         panel.add(surveyDescription);
       }
@@ -169,8 +170,7 @@ public class FormWebApp
         surveyIdField.setVisible(false);
         surveyIdField.setText(surveyId);
         surveyIdField.setName(F_SURVEY_ID);
-        HTML area = new HTML(fDescTxt);
-        area.setText(fDescTxt);
+        HTML area = new HTML(HtmlUtil.markupToHtml(fDescTxt));
         panel.add(new Label(fTitleTxt));
         panel.add(area);
         panel.add(surveyIdField);
@@ -196,10 +196,10 @@ public class FormWebApp
         {
           String choiceTxt = getChoiceTxt(prop, i);
           if (choiceTxt == null) { break; }
-          CheckBox b = new CheckBox(choiceTxt);
-          b.setName(FieldList.CH.toString() + i);
+          MultiCheckBox b = MultiCheckBox.createDefault(choiceTxt);
+          b.setFormName(FieldList.CH.toString() + i);
           String selVal = prop.get(FieldList.U_CH.toString() + i);
-          if (selVal != null && selVal.equals("on")) { b.setValue(true); }
+          b.setValue(selVal);
           header.panel.add(b);
         }
       }

@@ -48,8 +48,7 @@ public class DaterWebApp implements EntryPoint
     else
     { // Ask for cookies.
       TextBoxWin box = new TextBoxWin("Cookies");
-      String text = Text.getCur().getCookieNeeded();
-      box.setText(text);
+      box.setTextHtml(Text.getCur().getCookieNeededHtml());
       box.setButtonText(Text.getCur().getAcceptCookies());
       box.onClose(new ClickHandler()
       {
@@ -85,9 +84,9 @@ public class DaterWebApp implements EntryPoint
       public void onFailure(Throwable caught)
       {
         TextBoxWin box = new TextBoxWin("Error");
-        String text = "<b>Error getting data from server!</b><br/>" + caught.getMessage();
-        box.setText(text);
-        box.setButtonText("Reload");
+        String text = "<b>" + Text.getCur().getServerGetDataError() + "</b><br/>";
+        box.setTextHtml(text + HtmlUtil.escapeHtml(caught.getMessage()));
+        box.setButtonText(Text.getCur().getReload());
         box.onClose(new ClickHandler()
         {
           @Override
@@ -139,12 +138,12 @@ public class DaterWebApp implements EntryPoint
     HashMap<String, String> prop = Utils.toHashMap(input.substring(0, headIndex));
     ArrayList<String> propTable = new ArrayList<String>();
 
-    String fTitleTxt = prop.get(F_SURVEY_NAME);
-    String fDescTxt = prop.get(F_SURVEY_DESC);
+    String fTitleTxt = HtmlUtil.escapeHtml(prop.get(F_SURVEY_NAME));
+    String fDescTxt = HtmlUtil.markupToHtml(prop.get(F_SURVEY_DESC));
     HTML htmlHD = new HTML();
     htmlHD.setHTML("<h2>" + fTitleTxt + "</h2><br/>" + fDescTxt);
     
-    propTable.add("Name");
+    propTable.add(Text.getCur().getName());
     for (int i=0; i<Utils.MAX_CHOICES; i++)
     { // Fill Header
       String v = prop.get(FieldList.CH.toString() + i);
@@ -217,7 +216,7 @@ public class DaterWebApp implements EntryPoint
   protected void showUserGreeter(HashMap<String, String> prop, String surveyId)
   {
     TextBoxWin win = new TextBoxWin("Survey-User");
-    win.setText(Text.getCur().getGreetUsrHtml());
+    win.setTextHtml(Text.getCur().getGreetUsrHtml());
     Button editB = new Button();
     if (CliUtils.requestNewUser(prop))
     {
@@ -244,7 +243,7 @@ public class DaterWebApp implements EntryPoint
       win.setButtonText(Text.getCur().getEditSurveyChoice());
     }
     win.onClose(createToFormClick(false, surveyId));
-    win.setText(Text.getCur().getGreetAdminHtml());
+    win.setTextHtml(Text.getCur().getGreetAdminHtml());
     Button editB = new Button();
     editB.setText(Text.getCur().getEditSurveyForm());
     editB.addClickHandler(createToFormClick(true, surveyId));
@@ -272,7 +271,7 @@ public class DaterWebApp implements EntryPoint
   private void showFormNow(HashMap<String, String> prop, String surveyId, boolean forceEdit)
   {
     Label errorLabel = new Label();
-    Button sendButton = new Button("Send");
+    Button sendButton = new Button(Text.getCur().getSend());
     sendButton.addStyleName("sendButton");
     
     boolean showAsEdit = forceEdit || (surveyId==null);

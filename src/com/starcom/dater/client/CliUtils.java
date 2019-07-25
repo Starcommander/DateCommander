@@ -10,6 +10,9 @@ import com.starcom.dater.shared.WebXml;
 
 public class CliUtils
 {
+  public static final String CHECK_IMG_MAYBE = "img/maybe.png";
+  public static final String CHECK_IMG_YES = "img/yes.png";
+  public static final String CHECK_IMG_NO = "img/no.png";
   public enum ViewType { EdForm, EdChoice, ToSurvey };
   
   /** This is a UriParameter set from JS, for request on JS. */
@@ -27,6 +30,14 @@ public class CliUtils
   {
     String surveyId = Window.Location.getParameter(UrlParameter.SurveyId.toString());
     return surveyId;
+  }
+  
+  /** Get BaseUrl: <b>protocol://hostname:port/</b> */
+  public static String getBaseUrl()
+  {
+    String prot = Window.Location.getProtocol();
+    String host = Window.Location.getHost();
+    return prot + "//" + host + "/";
   }
   
   public static void gotoUrl(String surveyId, ViewType viewType)
