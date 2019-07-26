@@ -182,7 +182,7 @@ public class DaterWebApp implements EntryPoint
       }
     }
     Button editB = new Button();
-    editB.setText("<...>");
+    editB.setHTML("<img src='img/cogwheel.png' alt='MENU' />");
     editB.addClickHandler(createEditHandler(prop, surveyId));
     HTML html = new HTML();
     html.setHTML(HtmlUtil.buildTable(propTable, columns).toString());

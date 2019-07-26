@@ -28,3 +28,4 @@ do_clean
 cp -r $APP_SRC $APP_DIR
 dpkg-deb -b data/ target/date-commander.deb
 do_clean
+echo "Finish."

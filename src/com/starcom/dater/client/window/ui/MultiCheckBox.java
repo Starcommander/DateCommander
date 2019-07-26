@@ -32,8 +32,7 @@ public class MultiCheckBox extends HorizontalPanel implements ClickHandler
   public MultiCheckBox(String imgFile, String altTxt)
   {
     this.setVerticalAlignment(ALIGN_MIDDLE);
-    iconList.add(imgFile);
-    iconList.add(altTxt);
+    addSelection(imgFile, altTxt);
     setHtmlImage(imgFile, altTxt, 0);
     button.addClickHandler(this);
     label.addStyleName("mylargefont");
@@ -52,9 +51,8 @@ public class MultiCheckBox extends HorizontalPanel implements ClickHandler
   private void setHtmlImage(String imgFile, String altTxt, int index)
   {
     imgFile = HtmlUtil.escapeHtml(imgFile);
-    formBox.setValue(imgFile);
-    imgFile = CliUtils.getBaseUrl() + imgFile;
     altTxt = HtmlUtil.escapeHtml(altTxt);
+    formBox.setValue(imgFile);
     this.curIndex = index;
     String name = textLabel;
     String h = "<img src='" + imgFile + "' alt='" + altTxt + "' />";
