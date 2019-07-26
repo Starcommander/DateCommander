@@ -42,6 +42,11 @@ h2 {
 	font-size: 24px;
 }
 
+.mybottom {
+    position: fixed;
+    bottom: 0;
+}
+
 .sendButton {
   display: block;
   font-size: 16pt;

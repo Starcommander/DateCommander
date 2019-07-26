@@ -71,16 +71,18 @@ public class HtmlUtil
     Bool ol = new Bool(false); // ordered list
     for (String line : markup.split("\n"))
     {
-      if (line.startsWith("* ")) { line = enterList(line, false, ul); }
-      else if (line.startsWith("1. ")) { line = enterList(line, true, ol); }
+      String nl = "<br/>";
+      if (line.startsWith("* ")) { line = enterList(line, false, ul); nl = ""; }
+      else if (line.startsWith("1. ")) { line = enterList(line, true, ol); nl = ""; }
       else if (ul.b) { line = "</ul>" + line; }
       else if (ol.b) { line = "</ol>" + line; }
       
       if (line.startsWith("http://") || line.startsWith("https://"))
       {
         line = "<a href='" + line + "'>Link</a>";
+        nl = "";
       }
-      sb.append(line);
+      sb.append(line + nl);
     }
     return sb.toString();
   }
