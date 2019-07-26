@@ -11,7 +11,7 @@ This app is ...
 
 Current status:
 * You can create/enter/modify a survey very easy.
-* Some features are still missing, see below.
+* You can use markdown in description, so the use of * or 1. or http:// is converted.
 * You can see it life on a hosted page:
 * http://185.164.5.63:8080/dater/DaterWebApp.html
 
