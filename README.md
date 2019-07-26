@@ -16,11 +16,6 @@ Current status:
 * http://185.164.5.63:8080/dater/DaterWebApp.html
 
 Next steps:
-* Tests and debug on real server
-* Include Icons and Images into user interface.
-* Simple Clipboard-Copy
-* Allow multible choices: Yes, No, Maybe
-* Extend Description with markup-text.
-* Create installer for deb and docker
+* Create installer for docker
 * Add Image-upload possibility for main and choices
 * Allow multible entries from same browser?
