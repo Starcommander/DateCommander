@@ -216,7 +216,7 @@ public class DaterWebApp implements EntryPoint
   protected void showUserGreeter(HashMap<String, String> prop, String surveyId)
   {
     TextBoxWin win = new TextBoxWin("Survey-User");
-    win.setTextHtml(Text.getCur().getGreetUsrHtml());
+    win.setTextHtml(buildGreetTextWithLinks(false));
     Button editB = new Button();
     if (CliUtils.requestNewUser(prop))
     {
@@ -243,7 +243,7 @@ public class DaterWebApp implements EntryPoint
       win.setButtonText(Text.getCur().getEditSurveyChoice());
     }
     win.onClose(createToFormClick(false, surveyId));
-    win.setTextHtml(Text.getCur().getGreetAdminHtml());
+    win.setTextHtml(buildGreetTextWithLinks(true));
     Button editB = new Button();
     editB.setText(Text.getCur().getEditSurveyForm());
     editB.addClickHandler(createToFormClick(true, surveyId));
@@ -252,6 +252,17 @@ public class DaterWebApp implements EntryPoint
     closeB.setText(Text.getCur().getClose());
     win.addExtraButton(closeB);
     win.showBox();
+  }
+  
+  private String buildGreetTextWithLinks(boolean admin)
+  {
+    String shareUrl = CliUtils.getUrl(CliUtils.requestSurveyId(), ViewType.ToSurvey);
+    StringBuilder sb = new StringBuilder();
+    if (admin) { sb.append(Text.getCur().getGreetAdminHtml()); }
+    else { sb.append(Text.getCur().getGreetUsrHtml()); }
+    sb.append(HtmlUtil.buildShareButton(shareUrl));
+    sb.append("<br/><br/>");
+    return sb.toString();
   }
   
   private ClickHandler createToFormClick(final boolean editForm, final String surveyId)

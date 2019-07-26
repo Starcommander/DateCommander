@@ -2,10 +2,27 @@ package com.starcom.dater.client;
 
 import java.util.ArrayList;
 
+import com.google.gwt.user.client.Window;
 import com.starcom.dater.shared.prims.Bool;
 
 public class HtmlUtil
 {
+  public static StringBuilder buildShareButton(String link)
+  {
+    StringBuilder sb = new StringBuilder();
+    sb.append("<a href='");
+    sb.append("mailto:?to=&subject=Share%20Dater%20WebApp&body=");
+    sb.append(link.replace(":", "%3A").replace("/", "%2F"));
+    sb.append("'>Share: MAILTO</a><br/>");
+    
+    sb.append("<a href='");
+    if (CliUtils.getOsType() == CliUtils.OsType.Mac) { sb.append("sms:;body="); }
+    else { sb.append("sms:?body="); }
+    sb.append(link);
+    sb.append("'>Share: SMS</a>");
+    return sb;
+  }
+  
   public static StringBuilder buildTable(ArrayList<String> entries, int col)
   {
     StringBuilder sb = new StringBuilder();

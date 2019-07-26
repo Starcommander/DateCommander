@@ -14,6 +14,7 @@ public class CliUtils
   public static final String CHECK_IMG_YES = "img/yes.png";
   public static final String CHECK_IMG_NO = "img/no.png";
   public enum ViewType { EdForm, EdChoice, ToSurvey };
+  public enum OsType {Win, Unix, Linux, Mac, Sun, Unknown}
   
   /** This is a UriParameter set from JS, for request on JS. */
   public static ViewType requestViewTypeJS()
@@ -40,7 +41,7 @@ public class CliUtils
     return prot + "//" + host + "/";
   }
   
-  public static void gotoUrl(String surveyId, ViewType viewType)
+  public static String getUrl(String surveyId, ViewType viewType)
   {
     StringBuilder url = new StringBuilder(GWT.getModuleBaseURL());
     if (!url.toString().endsWith(WebXml.DATER_BASE))
@@ -51,7 +52,38 @@ public class CliUtils
     url = new StringBuilder(url.substring(0, end));
     url.append("?").append(UrlParameter.SurveyId.toString()).append("=").append(surveyId);
     url.append("&").append(UrlParameter.ViewType.toString()).append("=").append(viewType.toString());
-    Window.Location.replace(url.toString());
+    return url.toString();
+  }
+  
+  public static void gotoUrl(String surveyId, ViewType viewType)
+  {
+    Window.Location.replace(getUrl(surveyId, viewType));
+  }
+  
+  public static OsType getOsType()
+  {
+    String osName = Window.Navigator.getAppVersion();
+    if (osName.indexOf("Win") != -1)
+    {
+      return OsType.Win;
+    }
+    else if (osName.indexOf("Mac") != -1)
+    {
+      return OsType.Mac;
+    }
+    else if (osName.indexOf("X11") != -1)
+    {
+      return OsType.Unix;
+    }
+    else if (osName.indexOf("Linux") != -1)
+    {
+      return OsType.Linux;
+    }
+    else if (osName.indexOf("SunOS") != -1)
+    {
+      return OsType.Sun;
+    }
+    return OsType.Unknown;
   }
   
   public static boolean requestAdmin(HashMap<String, String> prop)
