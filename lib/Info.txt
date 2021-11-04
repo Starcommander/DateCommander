@@ -1,0 +1,3 @@
+Place the open-source-library-jar-files here.
+You can get them from internet (mostly commons.apache.org)
+Or just copy the libs from local folder ./war/WEB-INF/lib/
