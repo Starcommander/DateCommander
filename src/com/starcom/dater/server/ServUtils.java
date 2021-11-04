@@ -9,10 +9,12 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 
 import com.starcom.dater.client.DaterWebApp;
+import com.starcom.dater.shared.Constants;
 import com.starcom.dater.shared.FieldVerifier;
 import com.starcom.dater.shared.FieldVerifier.AnalyzerResult;
 import com.starcom.dater.shared.FieldVerifier.FieldList;
 import com.starcom.dater.shared.WebXml;
+import java.nio.charset.Charset;
 
 public class ServUtils
 {
@@ -86,7 +88,7 @@ public class ServUtils
   {
     StringBuilder sb = new StringBuilder();
     char[] cbuf = new char[256];
-    try (FileReader fr = new FileReader(file))
+    try (FileReader fr = new FileReader(file, Charset.forName(Constants.UTF_8)))
     {
       while (true)
       {
@@ -105,7 +107,7 @@ public class ServUtils
 
   public static boolean writeTextFile(File file, String txt)
   {
-    try(FileWriter fw = new FileWriter(file))
+    try(FileWriter fw = new FileWriter(file,Charset.forName(Constants.UTF_8)))
     {
       fw.write(txt);
       return true;

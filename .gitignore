@@ -3,3 +3,5 @@
 /installer/debian/target
 /war/daterwebapp
 /war/WEB-INF/deploy/
+/gwt-sdk/gwt-*
+/lib/*.jar

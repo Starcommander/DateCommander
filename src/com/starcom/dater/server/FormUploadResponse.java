@@ -22,6 +22,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import com.starcom.dater.shared.FieldVerifier.AnalyzerResult;
 import com.starcom.dater.shared.FieldVerifier.FieldList;
 import com.starcom.dater.shared.FieldVerifier.UrlParameter;
+import com.starcom.dater.shared.Constants;
 import com.starcom.dater.shared.Utils;
 
 /**
@@ -35,6 +36,7 @@ public class FormUploadResponse extends HttpServlet implements Servlet
     HttpServletResponse response) throws ServletException, IOException
   {
     response.setContentType("text/plain");
+    response.setCharacterEncoding(Constants.UTF_8);
     HashMap<String,String> fields = new HashMap<String,String>();
     FileItem uploadItem = getFileItemAndFields(request, fields);
     String requestorID = fields.get(FieldList.USER_NAME_ID.toString());
