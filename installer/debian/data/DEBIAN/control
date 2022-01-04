@@ -4,7 +4,6 @@ Architecture: all
 Maintainer: Paul Kashofer <Starcommander@github>
 Installed-Size: 200
 Depends: tomcat9
-Conflicts: tomcat9
 Priority: optional
 Description: A small web-app for creating a survey.
  It is similar to doodle, and very simple.
