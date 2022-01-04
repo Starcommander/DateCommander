@@ -1,2 +1,2 @@
-/etc/tomcat8/Catalina/localhost/dater.xml
-/etc/tomcat8/policy.d/33dater.policy
+/etc/tomcat9/Catalina/localhost/dater.xml
+/etc/tomcat9/policy.d/33dater.policy

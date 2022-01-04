@@ -1,6 +1,6 @@
 #!/bin/bash
 
-APP_DIR_RT=./data/usr/share/tomcat8-dater
+APP_DIR_RT=./data/usr/share/tomcat9-dater
 APP_DIR=$APP_DIR_RT/dater
 APP_SRC=../../war/
 
@@ -22,10 +22,9 @@ do_clean()
 
 do_check $APP_SRC
 do_check $APP_DIR_RT
-do_check ./target
 
 do_clean
 cp -r $APP_SRC $APP_DIR
-dpkg-deb -b data/ target/date-commander.deb
+fakeroot dpkg-deb -b data/ date-commander.deb
 do_clean
 echo "Finish."
