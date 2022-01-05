@@ -1,8 +1,6 @@
 #!/bin/bash
 
-chown root:root /etc/tomcat8/Catalina/localhost/dater.xml
-chown root:root /etc/tomcat8/policy.d/33dater.policy
-chown --recursive root:root /usr/share/tomcat8-dater/
-chown tomcat8:tomcat8 var/lib/daterserver
+mkdir /var/lib/daterserver
+chown tomcat9:tomcat9 /var/lib/daterserver
 
-/etc/init.d/tomcat8 restart
+/etc/init.d/tomcat9 restart
