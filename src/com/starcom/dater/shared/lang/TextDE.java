@@ -28,6 +28,7 @@ public class TextDE extends Text
   {
     return "<b>Cookies werden ben\u00f6tigt, um Benutzer<br/>und Admin der Umfrage zu identifizieren.</b><br/>"
      + "<b>Sie m\u00fcssen Cookies aktzeptieren,<br/>um diese Anwendung zu nutzen!</b><br/><br/>"
+     + "Es werden ausschliesslich funktionale interne Cookies verwendet.<br/>"
      + "Wenn sie Cookies nicht aktzeptieren, k\u00f6nnen sie hier nicht fortfahren.";
   }
 }

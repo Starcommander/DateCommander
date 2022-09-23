@@ -136,16 +136,18 @@ public class ServUtils
     }
     else
     {
-      subDirF.mkdir();
-      subDirUsers.mkdir();
+      boolean success = subDirF.mkdir();
+      System.out.println("Dir created: " + subDirF + ": " + success);
+      success = subDirUsers.mkdir();
+      System.out.println("Dir created: " + subDirUsers + ": " + success);
       if (subDirUsers.isDirectory())
       { // All ok and existing.
         return subDirF;
       }
     }
-    throw new IllegalStateException("Cannot create working dir!");
+    throw new IllegalStateException("Cannot create working dir: " + subDirUsers);
   }
-  
+
   public static File getWorkingDirExisting(String subDir, boolean getUsersDir)
   {
     if (!FieldVerifier.isValidID(subDir))
@@ -165,18 +167,20 @@ public class ServUtils
     }
     return subDirF;
   }
-  
+
   /** Get root working dir, ensures existing. */
   public static File getWorkingDirRoot()
   {
-    String dot = ".";
-    String dir = System.getProperty("user.home");
+    String dot = "";
+    String dir = new File(System.getProperty("catalina.base", "."), "webapps").getPath();
+    if (!new File(dir).canWrite()) { dir = System.getProperty("user.home"); dot = "."; }
     if (!new File(dir).canWrite()) { dir = "/var/lib/"; dot = ""; }
+    if (!new File(dir).canWrite()) { dir = "/tmp/"; dot = ""; } // Last chance
     File target = new File(dir, dot + "daterserver");
     if (!target.exists()) { target.mkdir(); }
     if (!target.isDirectory())
     {
-      throw new IllegalStateException("Missing working dir root!");
+      throw new IllegalStateException("Missing working dir root:" + target);
     }
     return target;
   }

@@ -28,7 +28,8 @@ public class TextEN extends Text
   {
     return "<b>Cookies are used to idendificate survey admins and users.</b><br/>"
      + "<b>You have to accept cookies to use this web-app!</b><br/><br/>"
-     + "If you do not accept, please leave this service.";
+     + "Only internal functional cookies are used.<br/>"
+     + "If you do not accept, you can not use this service.";
   }
 
 }

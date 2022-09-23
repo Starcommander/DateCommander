@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mkdir /var/lib/daterserver
-chown tomcat9:tomcat9 /var/lib/daterserver
+mkdir -p /var/lib/daterserver
+chown tomcat:tomcat /var/lib/daterserver
 
-/etc/init.d/tomcat9 restart
+service tomcat9 restart
