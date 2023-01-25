@@ -1,3 +1,4 @@
 Place here the google-web-toolkit-sdk.
 http://www.gwtproject.org/download.html
-For example place directory gwt-2.9.0 from gwt-2.9.0.zip here.
+- For example place directory gwt-2.10.0 from gwt-2.10.0.zip here.
+- On newer version also update build.xml

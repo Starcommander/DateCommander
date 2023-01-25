@@ -5,6 +5,7 @@ import com.starcom.dater.shared.FieldVerifier.CookieList;
 import com.starcom.dater.shared.FieldVerifier.FieldList;
 import com.starcom.dater.shared.lang.Text;
 import com.starcom.dater.shared.Utils;
+import com.starcom.dater.shared.WebXml;
 import com.starcom.dater.client.window.CommitBox;
 import com.starcom.dater.client.window.ui.MultiCheckBox;
 
@@ -28,7 +29,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
- * Entry point classes define <code>onModuleLoad()</code>.
+ * Form to transmit data to the server.
  */
 public class FormWebApp
 {
@@ -54,7 +55,7 @@ public class FormWebApp
       this.formBody = formBody;
       this.errorLabel = errorLabel;
     }
-    
+
     public void onClick(ClickEvent event)
     {
       errorLabel.setText("");
@@ -69,10 +70,9 @@ public class FormWebApp
       commitBox.sendButton.setEnabled(false);
       commitBox.textToServerLabel.setText(text_name);
       commitBox.serverResponseLabel.setText("");
-      
+
       formHeader.formPanel.addSubmitCompleteHandler(createSubmitComplete());
       formHeader.formPanel.submit();
-      
     }
 
     private SubmitCompleteHandler createSubmitComplete()
@@ -101,17 +101,16 @@ public class FormWebApp
       return h;
     }
   }
-  
+
   static class FormHeader
   {
     TextBox nameField = new TextBox();
     FormPanel formPanel = new FormPanel();
     VerticalPanel panel = new VerticalPanel();
-    
     boolean showEdit;
     String daterName;
     String daterNameId;
-    
+
     public FormHeader(String containerName, boolean showEdit, String surveyId, HashMap<String, String> prop)
     {
       this.showEdit = showEdit;
@@ -139,7 +138,7 @@ public class FormWebApp
         surveyFieldId.setVisible(false);
         panel.add(surveyFieldId);
       }
-      String href = GWT.getHostPageBaseURL()+"daterwebapp/surveyFormHandler";
+      String href = GWT.getHostPageBaseURL() + WebXml.DATER_BASE + WebXml.FORM_SERVICE;
       formPanel.setAction(href);
       formPanel.setEncoding(FormPanel.ENCODING_MULTIPART);
       formPanel.setMethod(FormPanel.METHOD_POST);
@@ -220,39 +219,31 @@ public class FormWebApp
         minus.setText("-");
         hp.add(plus);
         hp.add(minus);
-        plus.addClickHandler(createListHandler(header.panel,headerLen,true));
-        minus.addClickHandler(createListHandler(header.panel,headerLen,false));
+        plus.addClickHandler((ev) -> onClick(header.panel,headerLen,true));
+        minus.addClickHandler((ev) -> onClick(header.panel,headerLen,false));
         RootPanel.get(editContainer).add(hp);
       }
     }
 
-    private ClickHandler createListHandler(final VerticalPanel panel, final int headerLen, final boolean plus)
+    private void onClick(VerticalPanel panel, final int headerLen, final boolean plus)
     {
-      ClickHandler c = new ClickHandler()
+      int count = panel.getWidgetCount();
+      if (plus)
       {
-        @Override
-        public void onClick(ClickEvent event)
+        if (count < (Utils.MAX_CHOICES + headerLen))
         {
-          int count = panel.getWidgetCount();
-          if (plus)
-          {
-            if (count < (Utils.MAX_CHOICES + headerLen))
-            {
-              addListField(panel, headerLen, null);
-            }
-          }
-          else
-          {
-            if (count > (2 + headerLen))
-            {
-              panel.remove(count - 1);
-            }
-          }
+          addListField(panel, headerLen, null);
         }
-      };
-      return c;
+      }
+      else
+      {
+        if (count > (2 + headerLen))
+        {
+          panel.remove(count - 1);
+        }
+      }
     }
-    
+
     private void addListField(VerticalPanel panel, int headerLen, String choiceTxt)
     {
       if (choiceTxt == null) { choiceTxt = "Choice"; }
@@ -272,7 +263,7 @@ public class FormWebApp
       return prop.get(FieldList.CH.toString() + i);
     }
   }
-  
+
   private static String getCookie(String key, String defValue)
   {
     String value = Cookies.getCookie(key);

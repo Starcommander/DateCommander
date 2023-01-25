@@ -1,4 +1,4 @@
-package com.starcom.dater.client;
+package com.starcom.dater.client.service;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
