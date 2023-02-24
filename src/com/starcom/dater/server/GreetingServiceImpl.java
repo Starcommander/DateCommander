@@ -1,6 +1,6 @@
 package com.starcom.dater.server;
 
-import com.starcom.dater.client.GreetingService;
+import com.starcom.dater.client.service.GreetingService;
 import com.starcom.dater.shared.FieldVerifier;
 import com.starcom.dater.shared.FieldVerifier.FieldList;
 import com.starcom.dater.shared.FieldVerifier.ReqType;

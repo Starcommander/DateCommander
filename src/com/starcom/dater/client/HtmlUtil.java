@@ -2,7 +2,6 @@ package com.starcom.dater.client;
 
 import java.util.ArrayList;
 
-import com.google.gwt.user.client.Window;
 import com.starcom.dater.shared.prims.Bool;
 
 public class HtmlUtil

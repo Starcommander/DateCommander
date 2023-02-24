@@ -130,7 +130,10 @@ public class DaterWebApp implements EntryPoint
     });
   }
 
-  /** Show Result-Table */
+  /** Show Result-Table.
+   * Each entry is a line of input-String. <br>
+   * Where a line with a single hypen is a separator.
+   * The first section contains the header entries. */
   private void showTableNow(String input, String surveyId)
   {
     int headIndex = input.indexOf("\n-\n");

@@ -9,6 +9,11 @@ This app is ...
 * Very simple
 * Self hosted
 
+Build
+* You can Build it with: ant build
+* First you have to get GWT and libs:
+* See lib/Info.txt and gwt-sdk/Info.txt
+
 Current status:
 * You can create/enter/modify a survey very easy.
 * You can use markdown in description, so the use of * or 1. or http:// is converted.

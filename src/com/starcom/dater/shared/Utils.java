@@ -18,6 +18,7 @@ public class Utils
     return dateNow + "-" + random;
   }
   
+  /** Reads Properties-similar data into hashmap. */
   public static HashMap<String,String> toHashMap(String s)
   {
     HashMap<String,String> h = new HashMap<String,String>();
