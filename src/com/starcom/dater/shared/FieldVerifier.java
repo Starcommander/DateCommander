@@ -47,6 +47,15 @@ public class FieldVerifier
     return name.length() > 3;
   }
   
+  /**
+   * Verifies that the specified id is valid for our service.
+   * 
+   * In this example, we only require that the id is at least 10
+   * characters. Also we check that only allowed characters are letters, digits and '-'
+   * 
+   * @param id the id to validate
+   * @return true if valid, false if invalid
+   */
   public static boolean isValidID(String id)
   {
     if (id == null) { return false; }

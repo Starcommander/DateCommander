@@ -1,4 +1,6 @@
-package com.starcom.dater.client;
+package com.starcom.dater.client.util;
+
+import java.util.logging.Logger;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.typedarrays.shared.TypedArrays;
@@ -14,6 +16,7 @@ public abstract class JsCrypt
   JavaScriptObject key;
   String clearText;
   Uint8Array encData, iv;
+  static Logger logger = Logger.getLogger(JsCrypt.class.getName());
   
   public static int[] toArray(Uint8Array array)
   {
@@ -52,19 +55,19 @@ public abstract class JsCrypt
   
   private void onEncrypt(Uint8Array encrypted_data, Uint8Array iv)
   {
-    DaterWebApp.logger.fine("onEncrypt: " + encrypted_data);
+    logger.fine("onEncrypt: " + encrypted_data);
     responseEncryption(encrypted_data, iv);
   }
   
   private void onDecrypt(String decryptText)
   {
-    DaterWebApp.logger.fine("onDecrypt: " + decryptText);
+    logger.fine("onDecrypt: " + decryptText);
     responseDecryption(decryptText);
   }
   
   private void onGenKey(JavaScriptObject key)
   {
-    DaterWebApp.logger.info("onKey: keyExisting=" + (key!=null) + " keyReused=" + (this.key==key));
+    logger.info("onKey: keyExisting=" + (key!=null) + " keyReused=" + (this.key==key));
     this.key = key;
     if (clearText != null)
     {

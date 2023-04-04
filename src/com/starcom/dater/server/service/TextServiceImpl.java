@@ -1,6 +1,7 @@
-package com.starcom.dater.server;
+package com.starcom.dater.server.service;
 
-import com.starcom.dater.client.service.GreetingService;
+import com.starcom.dater.shared.service.TextService;
+import com.starcom.dater.server.ServUtils;
 import com.starcom.dater.shared.FieldVerifier;
 import com.starcom.dater.shared.FieldVerifier.FieldList;
 import com.starcom.dater.shared.FieldVerifier.ReqType;
@@ -15,7 +16,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  * The server-side implementation of the RPC service.
  */
 @SuppressWarnings("serial")
-public class GreetingServiceImpl extends RemoteServiceServlet implements GreetingService
+public class TextServiceImpl extends RemoteServiceServlet implements TextService
 {
   
   public String greetServer(String input) throws IllegalArgumentException
