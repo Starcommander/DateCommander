@@ -12,13 +12,14 @@ import com.starcom.dater.shared.lang.Text;
 
 public class CommitBox
 {
-  public DialogBox dialogBox = new DialogBox();
-  public Label textToServerLabel = new Label();
-  public HTML serverResponseLabel = new HTML();
-  public Button closeButton = new Button("Close");
-  public Button sendButton;
-  public String resultUri;
+  private DialogBox dialogBox = new DialogBox();
+  private Label textToServerLabel = new Label();
+  private HTML serverResponseLabel = new HTML();
+  private Button closeButton = new Button("Close");
+  private Button sendButton;
+  private String resultUri;
   
+  /** A simple box that appears and shows the result. */
   public CommitBox(final Button sendButton)
   {
     // Create the popup dialog box
@@ -53,5 +54,26 @@ public class CommitBox
         }
       }
     });
+  }
+  
+  /** Lets the send-button disappear and sets the text for showing later. */
+  public void onTransmit(String txt)
+  {
+      sendButton.setEnabled(false);
+      textToServerLabel.setText(txt);
+      serverResponseLabel.setText("");
+  }
+  
+  /** Finish transmitting shows this box.
+   * @param resultUri The uri for goto, or null to stay.
+   * @param txt The response text to show. */
+  public void onTransmitFinish(String resultUri, String txt)
+  {
+      dialogBox.setText("Remote Procedure Call");
+      serverResponseLabel.removeStyleName("serverResponseLabelError");
+      CommitBox.this.resultUri = resultUri;
+      serverResponseLabel.setText(txt);
+      dialogBox.center();
+      closeButton.setFocus(true);
   }
 }

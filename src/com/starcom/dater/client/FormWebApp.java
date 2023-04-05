@@ -67,9 +67,7 @@ public class FormWebApp
       }
       Cookies.setCookie(C_DATER_NAME, text_name, Utils.getDateInYears());
 
-      commitBox.sendButton.setEnabled(false);
-      commitBox.textToServerLabel.setText(text_name);
-      commitBox.serverResponseLabel.setText("");
+      commitBox.onTransmit(text_name);
 
       formHeader.formPanel.addSubmitCompleteHandler(createSubmitComplete());
       formHeader.formPanel.submit();
@@ -85,17 +83,14 @@ public class FormWebApp
           String result = ev.getResults();
           if (result == null) { result = Text.getCur().getNoResultFromServer(); }
           result = Utils.htmlToText(result);
-          commitBox.dialogBox.setText("Remote Procedure Call");
-          commitBox.serverResponseLabel.removeStyleName("serverResponseLabelError");
           String resultResp = result;
+          String resultUri = null;
           if (result.startsWith("http://") || result.startsWith("https://"))
           {
             resultResp = "\n" + Text.getCur().getSuccessfulCreated() + "\n\n" + Text.getCur().getForwardingToSurvey();
-            commitBox.resultUri = result;
+            resultUri = result;
           }
-          commitBox.serverResponseLabel.setText(resultResp);
-          commitBox.dialogBox.center();
-          commitBox.closeButton.setFocus(true);
+          commitBox.onTransmitFinish(resultUri, resultResp);
         }
       };
       return h;
