@@ -18,8 +18,9 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 @SuppressWarnings("serial")
 public class TextServiceImpl extends RemoteServiceServlet implements TextService
 {
-  
-  public String greetServer(String input) throws IllegalArgumentException
+  /** Sends text data to the server.
+   * The data must have this form: ReqType:UserID:SurveyID */
+  public String sendTextToServer(String input) throws IllegalArgumentException
   {
     if (input.startsWith(ReqType.GetSurvey.toString() + ":"))
     {
@@ -46,6 +47,7 @@ public class TextServiceImpl extends RemoteServiceServlet implements TextService
     }
   }
 
+  /** The userID and surveyID must be checked before. */
   private StringBuilder sendSurveyTable(String userId, String surveyID)
   {
     File userDir = ServUtils.getWorkingDirExisting(surveyID, true);

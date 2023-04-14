@@ -6,8 +6,8 @@ import com.starcom.dater.shared.service.TextServiceAsync;
 
 public class Transmitter
 {
-  private static final TextServiceAsync greetingService = GWT.create(TextService.class);
+  private static final TextServiceAsync textService = GWT.create(TextService.class);
   
-  public static TextServiceAsync getTransmitter() { return greetingService; }
+  public static TextServiceAsync getTransmitter() { return textService; }
   
 }

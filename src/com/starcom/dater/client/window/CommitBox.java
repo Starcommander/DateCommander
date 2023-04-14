@@ -19,7 +19,7 @@ public class CommitBox
   private Button sendButton;
   private String resultUri;
   
-  /** A simple box that appears and shows the result. */
+  /** A simple box that appears and shows the result of transmission. */
   public CommitBox(final Button sendButton)
   {
     // Create the popup dialog box

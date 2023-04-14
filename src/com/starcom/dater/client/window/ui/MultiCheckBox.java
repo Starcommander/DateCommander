@@ -1,8 +1,6 @@
 package com.starcom.dater.client.window.ui;
 
 import java.util.ArrayList;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -10,16 +8,17 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.starcom.dater.client.CliUtils;
 import com.starcom.dater.client.HtmlUtil;
 
-public class MultiCheckBox extends HorizontalPanel implements ClickHandler
+public class MultiCheckBox extends HorizontalPanel
 {
-  /** Contains ImgFile and altTxt. */
   private ArrayList<String> iconList = new ArrayList<String>();
+  private ArrayList<String> textList = new ArrayList<String>();
   private Button button = new Button();
   private Label label = new Label();
   private TextBox formBox = new TextBox();
   private int curIndex;
   private String textLabel;
 
+  /** Creates a MultiCheckBox with checked/unchecked pre-configured. */
   public static MultiCheckBox createDefault(String txt)
   {
     MultiCheckBox box = new MultiCheckBox(CliUtils.CHECK_IMG_MAYBE, "---");
@@ -29,12 +28,13 @@ public class MultiCheckBox extends HorizontalPanel implements ClickHandler
     return box;
   }
   
+  /** A checkbox with multible states and images, not just checked and unchecked. */
   public MultiCheckBox(String imgFile, String altTxt)
   {
     this.setVerticalAlignment(ALIGN_MIDDLE);
     addSelection(imgFile, altTxt);
     setHtmlImage(imgFile, altTxt, 0);
-    button.addClickHandler(this);
+    button.addClickHandler((e) -> setValueIndex(curIndex+1));
     label.addStyleName("mylargefont");
     formBox.setVisible(false);
     add(button);
@@ -45,9 +45,10 @@ public class MultiCheckBox extends HorizontalPanel implements ClickHandler
   public void addSelection(String imgFile, String altTxt)
   {
     iconList.add(imgFile);
-    iconList.add(altTxt);
+    textList.add(altTxt);
   }
 
+  /** Sets the value-index of this MultiCheckBox  */
   private void setHtmlImage(String imgFile, String altTxt, int index)
   {
     imgFile = HtmlUtil.escapeHtml(imgFile);
@@ -60,18 +61,19 @@ public class MultiCheckBox extends HorizontalPanel implements ClickHandler
     button.setHTML(h);
   }
 
+  /** Sets the value-index of this MultiCheckBox */
   public void setValueIndex(int index)
   {
     if (index < 0) { index = 0; }
-    int index2 = index * 2; // ArrayIndex
-    if (iconList.size() <= index2) { index2 = 0; index = 0; }
-    setHtmlImage(iconList.get(index2), iconList.get(index2 + 1), index);
+    if (index >= iconList.size()) { index = 0; }
+    setHtmlImage(iconList.get(index), textList.get(index), index);
   }
 
+  /** Sets the value-index of this MultiCheckBox by altTxt */
   public void setValue(String value)
   {
-    int index = iconList.indexOf(value);
-    setValueIndex(index/2);
+    int index = textList.indexOf(value);
+    setValueIndex(index);
   }
 
   /** Sets the name for submit. */
@@ -93,12 +95,6 @@ public class MultiCheckBox extends HorizontalPanel implements ClickHandler
   public String getTextLabel()
   {
     return textLabel;
-  }
-
-  @Override
-  public void onClick(ClickEvent event)
-  {
-    setValueIndex(curIndex+1);
   }
 
 }

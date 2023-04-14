@@ -49,8 +49,8 @@ public class DaterWebApp implements EntryPoint
     { // Ask for cookies.
       TextBoxWin box = new TextBoxWin("Cookies");
       box.setTextHtml(Text.getCur().getCookieNeededHtml());
-      box.setButtonText(Text.getCur().getAcceptCookies());
-      box.onClose(new ClickHandler()
+      box.getCloseButton().setText(Text.getCur().getAcceptCookies());
+      box.getCloseButton().addClickHandler(new ClickHandler()
       {
         @Override
         public void onClick(ClickEvent event)
@@ -77,7 +77,7 @@ public class DaterWebApp implements EntryPoint
       showFormNow(null, surveyId, false);
       return;
     }
-    Transmitter.getTransmitter().greetServer(
+    Transmitter.getTransmitter().sendTextToServer(
         requestType + ":" + userId + ":" + surveyId, new AsyncCallback<String>()
     {
       @Override
@@ -86,8 +86,8 @@ public class DaterWebApp implements EntryPoint
         TextBoxWin box = new TextBoxWin("Error");
         String text = "<b>" + Text.getCur().getServerGetDataError() + "</b><br/>";
         box.setTextHtml(text + HtmlUtil.escapeHtml(caught.getMessage()));
-        box.setButtonText(Text.getCur().getReload());
-        box.onClose(new ClickHandler()
+        box.getCloseButton().setText(Text.getCur().getReload());
+        box.getCloseButton().addClickHandler(new ClickHandler()
         {
           @Override
           public void onClick(ClickEvent event)
@@ -229,7 +229,7 @@ public class DaterWebApp implements EntryPoint
     {
       editB.setText(Text.getCur().getEditSurveyChoice());
     }
-    editB.addClickHandler(createToFormClick(false, surveyId));
+    editB.addClickHandler((e) -> toFormClick(false, surveyId));
     win.addExtraButton(editB);
     win.showBox();
   }
@@ -239,17 +239,17 @@ public class DaterWebApp implements EntryPoint
     TextBoxWin win = new TextBoxWin("Survey-Admin");
     if (CliUtils.requestNewUser(prop))
     {
-      win.setButtonText(Text.getCur().getEnterSurvey());
+      win.getCloseButton().setText(Text.getCur().getEnterSurvey());
     }
     else
     {
-      win.setButtonText(Text.getCur().getEditSurveyChoice());
+      win.getCloseButton().setText(Text.getCur().getEditSurveyChoice());
     }
-    win.onClose(createToFormClick(false, surveyId));
+    win.getCloseButton().addClickHandler((e) -> toFormClick(false, surveyId));
     win.setTextHtml(buildGreetTextWithLinks(true));
     Button editB = new Button();
     editB.setText(Text.getCur().getEditSurveyForm());
-    editB.addClickHandler(createToFormClick(true, surveyId));
+    editB.addClickHandler((e) -> toFormClick(true, surveyId));
     win.addExtraButton(editB);
     Button closeB = new Button();
     closeB.setText(Text.getCur().getClose());
@@ -268,18 +268,10 @@ public class DaterWebApp implements EntryPoint
     return sb.toString();
   }
   
-  private ClickHandler createToFormClick(final boolean editForm, final String surveyId)
+  private void toFormClick(boolean editForm, final String surveyId)
   {
-    ClickHandler h = new ClickHandler()
-    {
-      @Override
-      public void onClick(ClickEvent event)
-      {
-        if (editForm) { CliUtils.gotoUrl(surveyId, ViewType.EdForm); }
-        else { CliUtils.gotoUrl(surveyId, ViewType.EdChoice); }
-      }
-    };
-    return h;
+      if (editForm) { CliUtils.gotoUrl(surveyId, ViewType.EdForm); }
+      else { CliUtils.gotoUrl(surveyId, ViewType.EdChoice); }
   }
 
   private void showFormNow(HashMap<String, String> prop, String surveyId, boolean forceEdit)

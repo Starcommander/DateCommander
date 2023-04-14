@@ -26,7 +26,7 @@ public class CliUtils
     return viewType;
   }
   
-  /** @return The value, or null if missing. */
+  /** @return The uri-parameter-value, or null if missing. */
   public static String requestSurveyId()
   {
     String surveyId = Window.Location.getParameter(UrlParameter.SurveyId.toString());
@@ -41,6 +41,7 @@ public class CliUtils
     return prot + "//" + host + "/";
   }
   
+  /** Builds the expected url with parameters */
   public static String getUrl(String surveyId, ViewType viewType)
   {
     StringBuilder url = new StringBuilder(GWT.getModuleBaseURL());
