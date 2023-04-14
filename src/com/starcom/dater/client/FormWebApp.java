@@ -154,6 +154,7 @@ public class FormWebApp
         TextArea surveyDescription = new TextArea();
         surveyDescription.setName(F_SURVEY_DESC);
         surveyDescription.setText(fDescTxt);
+        surveyDescription.setTitle(Text.getCur().getUseMarkdown());
         panel.add(new Label(Text.getCur().getEnterTitleDescription()));
         panel.add(surveyField);
         panel.add(surveyDescription);

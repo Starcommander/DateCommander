@@ -24,6 +24,8 @@ public class TextDE extends Text
   @Override public String getServerReplies() { return "Server antwortet:"; }
   @Override public String getServerGetDataError() { return "Fehler beim Abrufen von Daten vom Server!"; }
   @Override public String getNoResultFromServer() { return "Keine Antwort vom Server!"; }
+  @Override public String getUseMarkdown() { return "Verwende Markdown: Verwendunv von * oder 1. oder http:// wird konvertiert.";
+}
   @Override public String getCookieNeededHtml()
   {
     return "<b>Cookies werden ben\u00f6tigt, um Benutzer<br/>und Admin der Umfrage zu identifizieren.</b><br/>"
