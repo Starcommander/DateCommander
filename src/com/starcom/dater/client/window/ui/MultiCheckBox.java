@@ -5,8 +5,8 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
-import com.starcom.dater.client.CliUtils;
 import com.starcom.dater.client.HtmlUtil;
+import com.starcom.dater.client.util.DaterUtils;
 
 public class MultiCheckBox extends HorizontalPanel
 {
@@ -21,9 +21,9 @@ public class MultiCheckBox extends HorizontalPanel
   /** Creates a MultiCheckBox with checked/unchecked pre-configured. */
   public static MultiCheckBox createDefault(String txt)
   {
-    MultiCheckBox box = new MultiCheckBox(CliUtils.CHECK_IMG_MAYBE, "---");
-    box.addSelection(CliUtils.CHECK_IMG_YES, "Y");
-    box.addSelection(CliUtils.CHECK_IMG_NO, "N");
+    MultiCheckBox box = new MultiCheckBox(DaterUtils.CHECK_IMG_MAYBE, "---");
+    box.addSelection(DaterUtils.CHECK_IMG_YES, "Y");
+    box.addSelection(DaterUtils.CHECK_IMG_NO, "N");
     box.setTextLabel(txt);
     return box;
   }

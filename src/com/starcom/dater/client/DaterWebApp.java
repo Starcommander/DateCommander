@@ -13,7 +13,8 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.starcom.dater.client.CliUtils.ViewType;
+import com.starcom.dater.client.util.DaterUtils;
+import com.starcom.dater.client.util.DaterUtils.ViewType;
 import com.starcom.dater.client.window.CommitBox;
 import com.starcom.dater.client.window.TextBoxWin;
 import com.starcom.dater.shared.Utils;
@@ -42,7 +43,7 @@ public class DaterWebApp implements EntryPoint
     String curL = com.google.gwt.i18n.client.LocaleInfo.getCurrentLocale().getLocaleName();
     Text.selectLanguage(curL);
     
-    final String surveyId = CliUtils.requestSurveyId();
+    final String surveyId = DaterUtils.requestSurveyId();
     boolean c_allowed = Boolean.parseBoolean(Cookies.getCookie(C_COOK_ALLOWED));
     if (c_allowed) { showFormTable(surveyId, ReqType.GetSurvey.toString()); }
     else
@@ -110,13 +111,13 @@ public class DaterWebApp implements EntryPoint
         }
         HashMap<String, String> prop = Utils.toHashMap(result);
 
-        CliUtils.ViewType viewType = CliUtils.requestViewTypeJS();
-        if (viewType == CliUtils.ViewType.EdChoice)
+        DaterUtils.ViewType viewType = DaterUtils.requestViewTypeJS();
+        if (viewType == DaterUtils.ViewType.EdChoice)
         {
           logger.info("Show EdChoice!");
           showFormNow(prop, surveyId, false);
         }
-        else if (viewType == CliUtils.ViewType.EdForm)
+        else if (viewType == DaterUtils.ViewType.EdForm)
         {
           logger.info("Show EdForm!");
           showFormNow(prop, surveyId, true);
@@ -202,7 +203,7 @@ public class DaterWebApp implements EntryPoint
       @Override
       public void onClick(ClickEvent event)
       {
-        boolean isAdm = CliUtils.requestAdmin(prop);
+        boolean isAdm = DaterUtils.requestAdmin(prop);
         if (isAdm)
         {
           showAdminGreeter(prop, surveyId);
@@ -221,7 +222,7 @@ public class DaterWebApp implements EntryPoint
     TextBoxWin win = new TextBoxWin("Survey-User");
     win.setTextHtml(buildGreetTextWithLinks(false));
     Button editB = new Button();
-    if (CliUtils.requestNewUser(prop))
+    if (DaterUtils.requestNewUser(prop))
     {
       editB.setText(Text.getCur().getEnterSurvey());
     }
@@ -237,7 +238,7 @@ public class DaterWebApp implements EntryPoint
   private void showAdminGreeter(HashMap<String, String> prop, String surveyId)
   {
     TextBoxWin win = new TextBoxWin("Survey-Admin");
-    if (CliUtils.requestNewUser(prop))
+    if (DaterUtils.requestNewUser(prop))
     {
       win.getCloseButton().setText(Text.getCur().getEnterSurvey());
     }
@@ -259,7 +260,7 @@ public class DaterWebApp implements EntryPoint
   
   private String buildGreetTextWithLinks(boolean admin)
   {
-    String shareUrl = CliUtils.getUrl(CliUtils.requestSurveyId(), ViewType.ToSurvey);
+    String shareUrl = DaterUtils.getUrl(DaterUtils.requestSurveyId(), ViewType.ToSurvey);
     StringBuilder sb = new StringBuilder();
     if (admin) { sb.append(Text.getCur().getGreetAdminHtml()); }
     else { sb.append(Text.getCur().getGreetUsrHtml()); }
@@ -270,8 +271,8 @@ public class DaterWebApp implements EntryPoint
   
   private void toFormClick(boolean editForm, final String surveyId)
   {
-      if (editForm) { CliUtils.gotoUrl(surveyId, ViewType.EdForm); }
-      else { CliUtils.gotoUrl(surveyId, ViewType.EdChoice); }
+      if (editForm) { DaterUtils.gotoUrl(surveyId, ViewType.EdForm); }
+      else { DaterUtils.gotoUrl(surveyId, ViewType.EdChoice); }
   }
 
   private void showFormNow(HashMap<String, String> prop, String surveyId, boolean forceEdit)

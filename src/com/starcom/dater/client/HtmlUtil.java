@@ -2,6 +2,7 @@ package com.starcom.dater.client;
 
 import java.util.ArrayList;
 
+import com.starcom.dater.client.util.DaterUtils;
 import com.starcom.dater.shared.prims.Bool;
 
 public class HtmlUtil
@@ -15,7 +16,7 @@ public class HtmlUtil
     sb.append("'>Share: MAILTO</a><br/>");
     
     sb.append("<a href='");
-    if (CliUtils.getOsType() == CliUtils.OsType.Mac) { sb.append("sms:;body="); }
+    if (DaterUtils.getOsType() == DaterUtils.OsType.Mac) { sb.append("sms:;body="); }
     else { sb.append("sms:?body="); }
     sb.append(link);
     sb.append("'>Share: SMS</a>");

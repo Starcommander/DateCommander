@@ -6,6 +6,7 @@ import com.starcom.dater.shared.FieldVerifier.FieldList;
 import com.starcom.dater.shared.lang.Text;
 import com.starcom.dater.shared.Utils;
 import com.starcom.dater.shared.WebXml;
+import com.starcom.dater.client.util.DaterUtils;
 import com.starcom.dater.client.window.CommitBox;
 import com.starcom.dater.client.window.ui.MultiCheckBox;
 
@@ -112,7 +113,7 @@ public class FormWebApp
       nameField.setName(F_USER_NAME);
       daterName = getCookie(C_DATER_NAME, null);
       daterNameId = getCookie(C_DATER_NAME_ID, null);
-      String daterSurveyId = CliUtils.requestSurveyId();
+      String daterSurveyId = DaterUtils.requestSurveyId();
       if (daterName != null)
       {
         nameField.setText(daterName);

@@ -1,4 +1,4 @@
-package com.starcom.dater.client;
+package com.starcom.dater.client.util;
 
 import java.util.HashMap;
 
@@ -8,7 +8,7 @@ import com.starcom.dater.shared.FieldVerifier.FieldList;
 import com.starcom.dater.shared.FieldVerifier.UrlParameter;
 import com.starcom.dater.shared.WebXml;
 
-public class CliUtils
+public class DaterUtils
 {
   public static final String CHECK_IMG_MAYBE = "img/maybe.png";
   public static final String CHECK_IMG_YES = "img/yes.png";
@@ -44,7 +44,7 @@ public class CliUtils
   /** Builds the expected url with parameters */
   public static String getUrl(String surveyId, ViewType viewType)
   {
-    StringBuilder url = new StringBuilder(GWT.getModuleBaseURL());
+    StringBuilder url = new StringBuilder(GWT.getModuleBaseURL()); // ???
     if (!url.toString().endsWith(WebXml.DATER_BASE))
     {
       throw new IllegalArgumentException("Base url wrong: " + url);

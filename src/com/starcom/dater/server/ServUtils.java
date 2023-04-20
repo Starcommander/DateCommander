@@ -22,6 +22,8 @@ public class ServUtils
   public static final String ADMIN_FILE = "Adm.txt";
   public static final String USER_SUB_DIR = "user";
   
+  private static File workingRootDir;
+  
 //  public static Properties toProp(HashMap<String,String> fields)
 //  {
 //    Properties prop = new Properties();
@@ -148,6 +150,7 @@ public class ServUtils
     throw new IllegalStateException("Cannot create working dir: " + subDirUsers);
   }
 
+  /** Get the Workingdir/subdir if existing */
   public static File getWorkingDirExisting(String subDir, boolean getUsersDir)
   {
     if (!FieldVerifier.isValidID(subDir))
@@ -171,6 +174,7 @@ public class ServUtils
   /** Get root working dir, ensures existing. */
   public static File getWorkingDirRoot()
   {
+    if (workingRootDir != null) { return workingRootDir; }
     String dot = "";
     String dir = new File(System.getProperty("catalina.base", "."), "webapps").getPath();
     if (!new File(dir).canWrite()) { dir = System.getProperty("user.home"); dot = "."; }
@@ -182,6 +186,7 @@ public class ServUtils
     {
       throw new IllegalStateException("Missing working dir root:" + target);
     }
+    workingRootDir = target;
     return target;
   }
 

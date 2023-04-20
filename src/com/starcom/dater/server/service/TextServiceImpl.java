@@ -18,8 +18,9 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 @SuppressWarnings("serial")
 public class TextServiceImpl extends RemoteServiceServlet implements TextService
 {
-  /** Sends text data to the server.
-   * The data must have this form: ReqType:UserID:SurveyID */
+  /** Server side implementation when sending text data to the server.<br>
+   * @param input Must have this form: ReqType:UserID:SurveyID
+   * @return The result for the client. */
   public String sendTextToServer(String input) throws IllegalArgumentException
   {
     if (input.startsWith(ReqType.GetSurvey.toString() + ":"))

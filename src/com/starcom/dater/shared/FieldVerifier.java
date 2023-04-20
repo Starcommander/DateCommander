@@ -48,10 +48,11 @@ public class FieldVerifier
   }
   
   /**
-   * Verifies that the specified id is valid for our service.
-   * 
-   * In this example, we only require that the id is at least 10
-   * characters. Also we check that only allowed characters are letters, digits and '-'
+   * Verifies that the specified id is valid for our service.<br>
+   * So this ID is allowed as filename.<br>
+   * <br>
+   * In this example, we only require that the id is at least 10 characters.<br>
+   * Also we check that only allowed characters are letters, digits and '-'<br>
    * 
    * @param id the id to validate
    * @return true if valid, false if invalid
