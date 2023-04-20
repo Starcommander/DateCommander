@@ -1,4 +1,4 @@
-package com.starcom.dater.server;
+package com.starcom.dater.server.service;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,6 +22,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import com.starcom.dater.shared.FieldVerifier.AnalyzerResult;
 import com.starcom.dater.shared.FieldVerifier.FieldList;
 import com.starcom.dater.shared.FieldVerifier.UrlParameter;
+import com.starcom.dater.server.ServUtils;
 import com.starcom.dater.shared.Constants;
 import com.starcom.dater.shared.Utils;
 

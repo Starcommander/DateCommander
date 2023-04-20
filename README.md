@@ -14,6 +14,9 @@ Build
 * First you have to get GWT and libs:
 * See lib/Info.txt and gwt-sdk/Info.txt
 
+Test
+* You can test the app locally with ant devmode
+
 Current status:
 * You can create/enter/modify a survey very easy.
 * You can use markdown in description, so the use of * or 1. or http:// is converted.

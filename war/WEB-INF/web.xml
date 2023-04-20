@@ -7,16 +7,16 @@
 
   <!-- Servlets -->
   <servlet>
-    <servlet-name>greetServlet</servlet-name>
-    <servlet-class>com.starcom.dater.server.GreetingServiceImpl</servlet-class>
+    <servlet-name>textServlet</servlet-name>
+    <servlet-class>com.starcom.dater.server.service.TextServiceImpl</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>formUploadServlet</servlet-name>
-    <servlet-class>com.starcom.dater.server.FormUploadResponse</servlet-class>
+    <servlet-class>com.starcom.dater.server.service.FormUploadResponse</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
+    <servlet-name>textServlet</servlet-name>
     <url-pattern>/daterwebapp/greet</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
