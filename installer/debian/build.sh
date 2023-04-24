@@ -49,7 +49,6 @@ get_vers
 
 do_clean
 cp -r $APP_SRC $APP_DIR
-rm -f $APP_DIR/*.war # WebArchive not necessary.
 set_vers
 mkdir -p target
 fakeroot dpkg-deb -b data/ target/date-commander_v${APP_VERS}.deb
