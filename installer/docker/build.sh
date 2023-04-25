@@ -10,6 +10,7 @@ check_file() # Args: dir msg
   if [ ! -f "$1" ]; then
     echo "$2"
     echo "Missing: $1"
+    exit 1
   fi
 }
 
