@@ -25,6 +25,8 @@ public class TextEN extends Text
   @Override public String getServerGetDataError() { return "Error getting data from server!"; }
   @Override public String getNoResultFromServer() { return "No result from server!"; }
   @Override public String getUseMarkdown() { return "Use markdown: The use of * or 1. or http:// is converted."; }
+  @Override public String getNewSurvey() { return "Create new survey"; }
+  @Override public String getNewTextPaper() { return "Create new text paper"; }
   @Override public String getCookieNeededHtml()
   {
     return "<b>Cookies are used to idendificate survey admins and users.</b><br/>"

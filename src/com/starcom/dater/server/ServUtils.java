@@ -194,9 +194,9 @@ public class ServUtils
   {
     String htmlFile = DaterWebApp.class.getSimpleName() + ".html";
     String reqUrl = request.getRequestURL().toString();
-    if (reqUrl.endsWith(WebXml.FORM_HANDLER))
+    if (reqUrl.endsWith("/" + WebXml.FORM_HANDLER))
     {
-      int end = reqUrl.length() - WebXml.FORM_HANDLER.length();
+      int end = reqUrl.length() - (1 + WebXml.FORM_HANDLER.length());
       reqUrl = reqUrl.substring(0, end);
     }
     else

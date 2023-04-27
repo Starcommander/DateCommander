@@ -17,7 +17,7 @@
   
   <servlet-mapping>
     <servlet-name>textServlet</servlet-name>
-    <url-pattern>/daterwebapp/greet</url-pattern>
+    <url-pattern>/daterwebapp/textService</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>formUploadServlet</servlet-name>

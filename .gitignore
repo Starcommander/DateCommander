@@ -5,3 +5,5 @@
 /war/WEB-INF/deploy/
 /gwt-sdk/gwt-*
 /lib/*.jar
+/DaterWebApp.war
+/installer/docker/DaterWebApp.war

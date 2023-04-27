@@ -8,6 +8,7 @@ This app is ...
 * Built with the google web toolkit
 * Very simple
 * Self hosted
+* Server and client side written in java
 
 Build
 * You can Build it with: ant build
@@ -16,6 +17,11 @@ Build
 
 Test
 * You can test the app locally with ant devmode
+
+Installer
+* There are 2 installers that you can execute:
+* Debian - Creates a *.deb for installing on a linux-debian machine.
+* Docker - Creates a docker image, for running on any linux machine.
 
 Current status:
 * You can create/enter/modify a survey very easy.

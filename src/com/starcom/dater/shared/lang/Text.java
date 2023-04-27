@@ -32,6 +32,8 @@ public abstract class Text
   public abstract String getServerGetDataError();
   public abstract String getCookieNeededHtml();
   public abstract String getUseMarkdown();
+  public abstract String getNewSurvey();
+  public abstract String getNewTextPaper();
   public static void selectLanguage(String lang)
   { // Default is en.
     if (lang.equalsIgnoreCase("de")) { curLang = new TextDE(); }

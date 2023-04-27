@@ -18,7 +18,7 @@ public class Utils
     return dateNow + "-" + random;
   }
   
-  /** Reads Properties-similar data into hashmap. */
+  /** Reads Properties-similar data into hashmap. (From file or transmitted string) */
   public static HashMap<String,String> toHashMap(String s)
   {
     HashMap<String,String> h = new HashMap<String,String>();
@@ -34,7 +34,8 @@ public class Utils
     return h;
   }
   
-  /** Will loose ';' and switch to ',' for easy convertion. */
+  /** Prepares the HashMap for storing to file.<br>
+   * Will loose ';' and switch to ',' for easy convertion. */
   public static String toString(HashMap<String,String> h)
   {
     StringBuilder sb = new StringBuilder();

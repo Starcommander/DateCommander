@@ -1,4 +1,4 @@
-package com.starcom.dater.client;
+package com.starcom.dater.client.view.form;
 
 import com.starcom.dater.shared.FieldVerifier;
 import com.starcom.dater.shared.FieldVerifier.CookieList;
@@ -6,6 +6,7 @@ import com.starcom.dater.shared.FieldVerifier.FieldList;
 import com.starcom.dater.shared.lang.Text;
 import com.starcom.dater.shared.Utils;
 import com.starcom.dater.shared.WebXml;
+import com.starcom.dater.client.HtmlUtil;
 import com.starcom.dater.client.util.DaterUtils;
 import com.starcom.dater.client.window.CommitBox;
 import com.starcom.dater.client.window.ui.MultiCheckBox;
@@ -20,7 +21,6 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
-import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -32,7 +32,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * Form to transmit data to the server.
  */
-public class FormWebApp
+public class SurveyForm
 {
   final static String C_DATER_NAME = CookieList.DaterName.toString();
   final static String C_DATER_NAME_ID = CookieList.DaterNameId.toString();
@@ -42,7 +42,7 @@ public class FormWebApp
   final static String F_USER_NAME = FieldList.USER_NAME.toString();
   final static String F_USER_ID = FieldList.USER_NAME_ID.toString();
 
-  static class CommitHandler implements ClickHandler
+  public static class CommitHandler implements ClickHandler
   {
     Label errorLabel;
     CommitBox commitBox;
@@ -70,35 +70,28 @@ public class FormWebApp
 
       commitBox.onTransmit(text_name);
 
-      formHeader.formPanel.addSubmitCompleteHandler(createSubmitComplete());
+      formHeader.formPanel.addSubmitCompleteHandler(ev -> onSubmitComplete(ev));
       formHeader.formPanel.submit();
     }
 
-    private SubmitCompleteHandler createSubmitComplete()
+    public void onSubmitComplete(SubmitCompleteEvent ev)
     {
-      SubmitCompleteHandler h = new SubmitCompleteHandler()
+      String result = ev.getResults();
+      if (result == null) { result = Text.getCur().getNoResultFromServer(); }
+      result = Utils.htmlToText(result);
+      String resultResp = result;
+      String resultUri = null;
+      if (result.startsWith("http://") || result.startsWith("https://"))
       {
-        @Override
-        public void onSubmitComplete(SubmitCompleteEvent ev)
-        {
-          String result = ev.getResults();
-          if (result == null) { result = Text.getCur().getNoResultFromServer(); }
-          result = Utils.htmlToText(result);
-          String resultResp = result;
-          String resultUri = null;
-          if (result.startsWith("http://") || result.startsWith("https://"))
-          {
-            resultResp = "\n" + Text.getCur().getSuccessfulCreated() + "\n\n" + Text.getCur().getForwardingToSurvey();
-            resultUri = result;
-          }
-          commitBox.onTransmitFinish(resultUri, resultResp);
-        }
-      };
-      return h;
+        resultResp = "\n" + Text.getCur().getSuccessfulCreated() + "\n\n" + Text.getCur().getForwardingToSurvey();
+        if (result.contains("?")) resultUri = result + "&ViewType=ToSurvey"; //TODO: Find a better solution
+        else resultUri = result + "?ViewType=ToSurvey";
+      }
+      commitBox.onTransmitFinish(resultUri, resultResp);
     }
   }
 
-  static class FormHeader
+  public static class FormHeader
   {
     TextBox nameField = new TextBox();
     FormPanel formPanel = new FormPanel();
@@ -107,6 +100,7 @@ public class FormWebApp
     String daterName;
     String daterNameId;
 
+    /** Creates the Textfields of the survey-form */
     public FormHeader(String containerName, boolean showEdit, String surveyId, HashMap<String, String> prop)
     {
       this.showEdit = showEdit;
@@ -134,7 +128,7 @@ public class FormWebApp
         surveyFieldId.setVisible(false);
         panel.add(surveyFieldId);
       }
-      String href = GWT.getHostPageBaseURL() + WebXml.DATER_BASE + WebXml.FORM_SERVICE;
+      String href = GWT.getHostPageBaseURL() + WebXml.FORM_HANDLER + "?ViewType=ToSurvey";
       formPanel.setAction(href);
       formPanel.setEncoding(FormPanel.ENCODING_MULTIPART);
       formPanel.setMethod(FormPanel.METHOD_POST);
@@ -182,8 +176,9 @@ public class FormWebApp
     }
   }
   
-  static class FormBody
+  public static class FormBody
   {
+    /** Creates the Textfields-List of the survey-form */
     public FormBody(String editContainer, FormHeader header, HashMap<String, String> prop)
     {
       if (!header.showEdit)
@@ -260,7 +255,7 @@ public class FormWebApp
       return prop.get(FieldList.CH.toString() + i);
     }
   }
-
+  
   private static String getCookie(String key, String defValue)
   {
     String value = Cookies.getCookie(key);

@@ -13,16 +13,16 @@ public class DaterUtils
   public static final String CHECK_IMG_MAYBE = "img/maybe.png";
   public static final String CHECK_IMG_YES = "img/yes.png";
   public static final String CHECK_IMG_NO = "img/no.png";
-  public enum ViewType { EdForm, EdChoice, ToSurvey };
+  public enum ViewType { EdForm, EdChoice, ToSurvey, ToTextPaper, Overview };
   public enum OsType {Win, Unix, Linux, Mac, Sun, Unknown}
   
-  /** This is a UriParameter set from JS, for request on JS. */
+  /** This is the Value of UriParameter ViewType, for request on JS. */
   public static ViewType requestViewTypeJS()
   {
     String viewTypeS = Window.Location.getParameter(UrlParameter.ViewType.toString());
-    if (viewTypeS == null) { return ViewType.ToSurvey; }
+    if (viewTypeS == null) { return ViewType.Overview; }
     ViewType viewType = ViewType.valueOf(viewTypeS);
-    if (viewType == null) { return ViewType.ToSurvey; }
+    if (viewType == null) { return ViewType.Overview; }
     return viewType;
   }
   
@@ -41,7 +41,7 @@ public class DaterUtils
     return prot + "//" + host + "/";
   }
   
-  /** Builds the expected url with parameters */
+  /** Builds the expected url with parameters, where surveyId may be null */
   public static String getUrl(String surveyId, ViewType viewType)
   {
     StringBuilder url = new StringBuilder(GWT.getModuleBaseURL()); // ???
@@ -51,8 +51,11 @@ public class DaterUtils
     }
     int end = url.length() - WebXml.DATER_BASE.length();
     url = new StringBuilder(url.substring(0, end));
-    url.append("?").append(UrlParameter.SurveyId.toString()).append("=").append(surveyId);
-    url.append("&").append(UrlParameter.ViewType.toString()).append("=").append(viewType.toString());
+    url.append("?").append(UrlParameter.ViewType.toString()).append("=").append(viewType.toString());
+    if (surveyId != null)
+    {
+      url.append("&").append(UrlParameter.SurveyId.toString()).append("=").append(surveyId);
+    }
     return url.toString();
   }
   
