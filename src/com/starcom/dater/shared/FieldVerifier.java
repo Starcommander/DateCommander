@@ -23,7 +23,7 @@ package com.starcom.dater.shared;
 public class FieldVerifier
 {
   public enum AnalyzerResult { ERROR, NEW_SURVEY, SURVEY_ENTRY, SURVEY_EDIT };
-  public enum FieldList { USER_NAME, USER_NAME_ID, SURVEY_NAME, SURVEY_DESCRIPTION, SURVEY_ID, B_USR_ADM, B_USR_NEW, CH, U_CH };
+  public enum FieldList { USER_NAME, USER_NAME_ID, SURVEY_NAME, SURVEY_DESCRIPTION, SURVEY_ID, B_USR_ADM, B_USR_NEW, /** Choice */ CH, /** UserChoice */ U_CH };
   public enum CookieList { CookAllowed, DaterName, DaterNameId };
   public enum UrlParameter { SurveyId, ViewType };
   public enum ReqType { GetSurvey, GetSurveyTable };

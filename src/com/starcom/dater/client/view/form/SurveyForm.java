@@ -47,9 +47,9 @@ public class SurveyForm
     Label errorLabel;
     CommitBox commitBox;
     FormHeader formHeader;
-    FormBody formBody;
+    FormBodyList formBody;
 
-    public CommitHandler(CommitBox commitBox, FormHeader formHeader, FormBody formBody, Label errorLabel)
+    public CommitHandler(CommitBox commitBox, FormHeader formHeader, FormBodyList formBody, Label errorLabel)
     {
       this.commitBox = commitBox;
       this.formHeader = formHeader;
@@ -176,23 +176,23 @@ public class SurveyForm
     }
   }
   
-  public static class FormBody
+  public static class FormBodyList
   {
-    /** Creates the Textfields-List of the survey-form */
-    public FormBody(String editContainer, FormHeader header, HashMap<String, String> prop)
+    /** Creates the list of Textfields or Checkboxes. */
+    public FormBodyList(String editContainer, FormHeader header, HashMap<String, String> prop)
     {
       if (!header.showEdit)
       {
-        for (int i=0; i<Utils.MAX_CHOICES; i++)
-        {
-          String choiceTxt = getChoiceTxt(prop, i);
-          if (choiceTxt == null) { break; }
-          MultiCheckBox b = MultiCheckBox.createDefault(choiceTxt);
-          b.setFormName(FieldList.CH.toString() + i);
-          String selVal = prop.get(FieldList.U_CH.toString() + i);
-          b.setValue(selVal);
-          header.panel.add(b);
-        }
+          for (int i=0; i<Utils.MAX_CHOICES; i++)
+          {
+            String choiceTxt = getChoiceTxt(prop, i);
+            if (choiceTxt == null) { break; }
+            MultiCheckBox b = MultiCheckBox.createDefault(choiceTxt);
+            b.setFormName(FieldList.CH.toString() + i);
+            String selVal = prop.get(FieldList.U_CH.toString() + i);
+            b.setValue(selVal);
+            header.panel.add(b);
+    	}
       }
       else
       {

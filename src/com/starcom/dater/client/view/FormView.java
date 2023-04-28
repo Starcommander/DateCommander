@@ -3,6 +3,7 @@ package com.starcom.dater.client.view;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Cookies;
@@ -12,14 +13,16 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.starcom.dater.client.HtmlUtil;
-import com.starcom.dater.client.Transmitter;
 import com.starcom.dater.client.view.form.SurveyForm;
+import com.starcom.dater.client.view.form.TextRequest;
 import com.starcom.dater.client.window.CommitBox;
 import com.starcom.dater.client.window.TextBoxWin;
 import com.starcom.dater.shared.Utils;
 import com.starcom.dater.shared.FieldVerifier.CookieList;
 import com.starcom.dater.shared.FieldVerifier.ReqType;
 import com.starcom.dater.shared.lang.Text;
+import com.starcom.dater.shared.service.TextService;
+import com.starcom.dater.shared.service.TextServiceAsync;
 
 public class FormView
 {
@@ -43,44 +46,22 @@ public class FormView
 	      showFormNow(null, surveyId, false);
 	      return;
 	    }
-	    Transmitter.getTransmitter().sendTextToServer(
-	        requestType + ":" + userId + ":" + surveyId, new AsyncCallback<String>()
-	    {
-	      @Override
-	      public void onFailure(Throwable caught)
-	      {
-	        TextBoxWin box = new TextBoxWin("Error");
-	        String text = "<b>" + Text.getCur().getServerGetDataError() + "</b><br/>";
-	        box.setTextHtml(text + HtmlUtil.escapeHtml(caught.getMessage()));
-	        box.getCloseButton().setText(Text.getCur().getReload());
-	        box.getCloseButton().addClickHandler(new ClickHandler()
-	        {
-	          @Override
-	          public void onClick(ClickEvent event)
-	          {
-	            Window.Location.reload();
-	          }
-	        });
-	        box.showBox();
-	      }
-
-	      @Override
-	      public void onSuccess(String result)
-	      {
-	        logger.fine("Execute onSuccess(s)");
-	        if (requestType.equals(ReqType.GetSurveyTable.toString()))
-	        {
-	          logger.info("Show as table!");
-	          TableView.showTableNow(result, surveyId); //TODO: Hier geht es?
-	          return;
-	        }
-	        HashMap<String, String> prop = Utils.toHashMap(result);
-	logger.warning("Got props: " + result);
-	        MainView.showSelectedViewType(prop, null); //TODO: Hier geht es nicht?
-	      }
-	    });
+	    TextRequest.request(surveyId, userId, requestType, s -> onResponse(s, requestType, surveyId));
 	  }
-	  
+
+      private static void onResponse(String result, String requestType, String surveyId)
+      {
+        logger.fine("Execute onSuccess(s)");
+        if (requestType.equals(ReqType.GetSurveyTable.toString()))
+        {
+          logger.info("Show as table!");
+          TableView.showTableNow(result, surveyId); //TODO: Hier geht es?
+          return;
+        }
+        HashMap<String, String> prop = Utils.toHashMap(result);
+logger.warning("Got props: " + result);
+        MainView.showSelectedViewType(prop, surveyId); //TODO: Hier geht es nicht?
+      }
 
 	  /** Show the form for editing the survey itshelf, or the selected choices */
 	  public static void showFormNow(HashMap<String, String> prop, String surveyId, boolean forceEdit)
@@ -91,12 +72,12 @@ public class FormView
 	    
 	    boolean showAsEdit = forceEdit || (surveyId==null);
 	    SurveyForm.FormHeader formHeader = new SurveyForm.FormHeader("formContainer", showAsEdit, surveyId, prop);
-	    SurveyForm.FormBody formBody = new SurveyForm.FormBody("editButtonContainer", formHeader, prop);
+	    SurveyForm.FormBodyList formBodyList = new SurveyForm.FormBodyList("editButtonContainer", formHeader, prop);
 	    RootPanel.get("sendButtonContainer").add(sendButton);
 	    RootPanel.get("errorLabelContainer").add(errorLabel);
 	    
 	    CommitBox commitBox = new CommitBox(sendButton);
-	    SurveyForm.CommitHandler handler = new SurveyForm.CommitHandler(commitBox, formHeader, formBody, errorLabel);
+	    SurveyForm.CommitHandler handler = new SurveyForm.CommitHandler(commitBox, formHeader, formBodyList, errorLabel);
 	    sendButton.addClickHandler(handler);
 	  }
 }

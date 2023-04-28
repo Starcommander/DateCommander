@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.logging.Logger;
 
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.starcom.dater.client.util.DaterUtils;
@@ -51,14 +51,15 @@ public class MainView {
 
 	private static void showTextPaperView(String editContainer, HashMap<String, String> prop)
 	{
-	    HorizontalPanel hp = new HorizontalPanel();
+	    VerticalPanel vp = new VerticalPanel();
 	    TextArea txt = new TextArea();
-	    hp.add(txt);
+	    vp.add(txt);
 	    
 	    Button send = new Button();
 	    send.setText(Text.getCur().getSend());
 	    send.addClickHandler((ev) -> System.out.println("Send text now."));
-	    RootPanel.get(editContainer).add(hp);
+	    vp.add(send);
+	    RootPanel.get(editContainer).add(vp);
 	}
 
   public static void showOverviewNow()
