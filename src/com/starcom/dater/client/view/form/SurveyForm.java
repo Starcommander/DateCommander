@@ -183,6 +183,8 @@ public class SurveyForm
     {
       if (!header.showEdit)
       {
+    	if (prop!=null)
+    	{
           for (int i=0; i<Utils.MAX_CHOICES; i++)
           {
             String choiceTxt = getChoiceTxt(prop, i);
@@ -192,6 +194,7 @@ public class SurveyForm
             String selVal = prop.get(FieldList.U_CH.toString() + i);
             b.setValue(selVal);
             header.panel.add(b);
+          }
     	}
       }
       else

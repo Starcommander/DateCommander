@@ -32,7 +32,7 @@ public class DaterWebApp implements EntryPoint
     
     final String surveyId = DaterUtils.requestSurveyId();
     boolean c_allowed = Boolean.parseBoolean(Cookies.getCookie(COOKIE_ALLOWED));
-    if (c_allowed) { MainView.showSelectedViewType(null, surveyId); }
+    if (c_allowed) { MainView.showSelectedViewType(surveyId); }
     else
     { // Ask for cookies.
       TextBoxWin box = new TextBoxWin("Cookies");

@@ -7,12 +7,12 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.starcom.dater.client.util.DaterUtils.ViewType;
 import com.starcom.dater.client.view.form.SurveyForm;
 import com.starcom.dater.client.view.form.TextRequest;
 import com.starcom.dater.client.window.CommitBox;
 import com.starcom.dater.shared.Utils;
 import com.starcom.dater.shared.FieldVerifier.CookieList;
-import com.starcom.dater.shared.FieldVerifier.ReqType;
 import com.starcom.dater.shared.lang.Text;
 
 public class FormView
@@ -22,8 +22,8 @@ public class FormView
 	  final static String COOKIE_NAME_ID = CookieList.DaterNameId.toString();
 	  
 	  /** Shows a form to fill in.
-	   * @param requestType The first part of the transmitted response. */
-	  public static void showFormTable(final String surveyId, final String requestType)
+	   * @param viewType The first part of the transmitted response. */
+	  public static void showFormTable(final String surveyId, final ViewType viewType)
 	  {
 	    logger.fine("Execute showFormTable(s,s)");
 	    String userId = Cookies.getCookie(COOKIE_NAME_ID);
@@ -34,34 +34,42 @@ public class FormView
 	    }
 	    if (surveyId == null)
 	    {
-	      showFormNow(null, surveyId, false);
+	      showFormNow(null, surveyId, viewType);
 	      return;
 	    }
-	    TextRequest.request(surveyId, userId, requestType, s -> onResponse(s, requestType, surveyId));
+	    TextRequest.request(surveyId, userId, viewType, s -> onResponse(s, viewType, surveyId));
 	  }
 
-      private static void onResponse(String result, String requestType, String surveyId)
+      private static void onResponse(String result, ViewType viewType, String surveyId)
       {
         logger.fine("Execute onSuccess(s)");
-        if (requestType.equals(ReqType.GetSurveyTable.toString()))
+        if (viewType.equals(ViewType.ToSurvey))
         {
           logger.info("Show as table!");
-          TableView.showTableNow(result, surveyId); //TODO: Hier geht es?
+          TableView.showTableNow(result, surveyId);
           return;
         }
-        HashMap<String, String> prop = Utils.toHashMap(result);
-logger.warning("Got props: " + result);
-        MainView.showSelectedViewType(prop, surveyId); //TODO: Hier geht es nicht?
+        else if (viewType == ViewType.EdForm)
+        {
+          HashMap<String, String> prop = Utils.toHashMap(result);
+          showFormNow(prop, surveyId, viewType);
+        }
+        else if (viewType == ViewType.EdChoice)
+        {
+          HashMap<String, String> prop = Utils.toHashMap(result);
+          showFormNow(prop, surveyId, viewType);
+        }
       }
 
-	  /** Show the form for editing the survey itshelf, or the selected choices */
-	  public static void showFormNow(HashMap<String, String> prop, String surveyId, boolean forceEdit)
+          /** Show the form for editing the survey itshelf, or the selected choices
+           * @param forceFormEdit True to ensure formular-edition-page. */
+	  public static void showFormNow(HashMap<String, String> prop, String surveyId, ViewType viewType)
 	  {
 	    Label errorLabel = new Label();
 	    Button sendButton = new Button(Text.getCur().getSend());
 	    sendButton.addStyleName("sendButton");
 	    
-	    boolean showAsEdit = forceEdit || (surveyId==null);
+	    boolean showAsEdit = viewType==ViewType.EdForm || (surveyId==null);
 	    SurveyForm.FormHeader formHeader = new SurveyForm.FormHeader("formContainer", showAsEdit, surveyId, prop);
 	    SurveyForm.FormBodyList formBodyList = new SurveyForm.FormBodyList("editButtonContainer", formHeader, prop);
 	    RootPanel.get("sendButtonContainer").add(sendButton);

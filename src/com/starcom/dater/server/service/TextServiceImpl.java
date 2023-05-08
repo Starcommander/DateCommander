@@ -1,10 +1,10 @@
 package com.starcom.dater.server.service;
 
 import com.starcom.dater.shared.service.TextService;
+import com.starcom.dater.client.util.DaterUtils.ViewType;
 import com.starcom.dater.server.ServUtils;
 import com.starcom.dater.shared.FieldVerifier;
 import com.starcom.dater.shared.FieldVerifier.FieldList;
-import com.starcom.dater.shared.FieldVerifier.ReqType;
 import com.starcom.dater.shared.Utils;
 
 import java.io.File;
@@ -23,7 +23,7 @@ public class TextServiceImpl extends RemoteServiceServlet implements TextService
    * @return The result for the client. */
   public String sendTextToServer(String input) throws IllegalArgumentException
   {
-    if (input.startsWith(ReqType.GetSurvey.toString() + ":"))
+    if (input.startsWith(ViewType.EdForm.toString() + ":") || input.startsWith(ViewType.EdChoice.toString() + ":"))
     {
       String[] fields = input.split(":");
       if ( fields.length != 3 ) throw new IllegalArgumentException("Fields len not ok!");
@@ -32,7 +32,7 @@ public class TextServiceImpl extends RemoteServiceServlet implements TextService
       String ret = sendSurvey(fields[1], fields[2]).toString();
       return ret;
     }
-    else if (input.startsWith(ReqType.GetSurveyTable.toString() + ":"))
+    else if (input.startsWith(ViewType.ToSurvey.toString() + ":"))
     {
       String[] fields = input.split(":");
       if ( fields.length != 3 ) throw new IllegalArgumentException("Fields len not ok!");
@@ -83,7 +83,8 @@ public class TextServiceImpl extends RemoteServiceServlet implements TextService
     return sb;
   }
 
-  /** The userID and surveyID must be checked before. */
+  /** Appends the values isUsrAdm and isUsrNew.<br>
+   * The userID and surveyID must be checked before. */
   private StringBuilder obtainMain(String userId, String surveyID) throws IllegalArgumentException
   {
     File workDir = ServUtils.getWorkingDirExisting(surveyID, false);

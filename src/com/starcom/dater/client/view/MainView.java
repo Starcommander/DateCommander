@@ -9,32 +9,30 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.starcom.dater.client.util.DaterUtils;
 import com.starcom.dater.client.util.DaterUtils.ViewType;
-import com.starcom.dater.shared.FieldVerifier.ReqType;
 import com.starcom.dater.shared.lang.Text;
 
 public class MainView {
 	  static Logger logger = Logger.getLogger(MainView.class.getName());
 
 	  /** Show the View that is selected as uri-parameter.
-	   * @param prop Transmitted properties, or null?
 	   * @param surveyId Id when present, null otherwise. */
-	  public static void showSelectedViewType(HashMap<String, String> prop, String surveyId)
+	  public static void showSelectedViewType(String surveyId)
 	  {
 	        DaterUtils.ViewType viewType = DaterUtils.requestViewTypeJS();
 	        if (viewType == DaterUtils.ViewType.EdChoice)
 	        {
 	          logger.info("Show EdChoice!");
-	          FormView.showFormNow(prop, surveyId, false);
+	          FormView.showFormTable(surveyId, viewType);
 	        }
 	        else if (viewType == DaterUtils.ViewType.EdForm)
 	        {
 	          logger.info("Show EdForm!");
-	          FormView.showFormNow(prop, surveyId, true);
+	          FormView.showFormTable(surveyId, viewType);
 	        }
 	        else if (viewType == DaterUtils.ViewType.ToSurvey)
 	        {
 	          logger.info("Show ToSurvey!");
-	          FormView.showFormTable(surveyId, ReqType.GetSurveyTable.toString());
+	          FormView.showFormTable(surveyId, viewType);
 	        }
 	        else if (viewType == DaterUtils.ViewType.ToTextPaper)
 	        {

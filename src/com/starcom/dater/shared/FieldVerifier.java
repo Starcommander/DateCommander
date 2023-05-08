@@ -26,7 +26,6 @@ public class FieldVerifier
   public enum FieldList { USER_NAME, USER_NAME_ID, SURVEY_NAME, SURVEY_DESCRIPTION, SURVEY_ID, B_USR_ADM, B_USR_NEW, /** Choice */ CH, /** UserChoice */ U_CH };
   public enum CookieList { CookAllowed, DaterName, DaterNameId };
   public enum UrlParameter { SurveyId, ViewType };
-  public enum ReqType { GetSurvey, GetSurveyTable };
 
   /**
    * Verifies that the specified name is valid for our service.

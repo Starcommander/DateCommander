@@ -8,6 +8,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.starcom.dater.client.HtmlUtil;
+import com.starcom.dater.client.util.DaterUtils.ViewType;
 import com.starcom.dater.client.window.TextBoxWin;
 import com.starcom.dater.shared.lang.Text;
 import com.starcom.dater.shared.service.TextService;
@@ -20,10 +21,10 @@ public class TextRequest
   
   /** Shows a form to fill in.
    * @param requestType The first part of the transmitted response. */
-  public static void request(final String surveyId, String userId, final String requestType, TextResponse response)
+  public static void request(final String surveyId, String userId, final ViewType viewType, TextResponse response)
   {
     textService.sendTextToServer(
-        requestType + ":" + userId + ":" + surveyId, new AsyncCallback<String>()
+        viewType + ":" + userId + ":" + surveyId, new AsyncCallback<String>()
     {
       @Override
       public void onFailure(Throwable caught)
@@ -47,7 +48,7 @@ public class TextRequest
       public void onSuccess(String result)
       {
         logger.fine("Execute onSuccess(s)");
-        response.run(requestType);
+        response.run(result);
       }
     });
   }
