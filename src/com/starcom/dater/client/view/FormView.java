@@ -3,26 +3,17 @@ package com.starcom.dater.client.view;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.starcom.dater.client.HtmlUtil;
 import com.starcom.dater.client.view.form.SurveyForm;
 import com.starcom.dater.client.view.form.TextRequest;
 import com.starcom.dater.client.window.CommitBox;
-import com.starcom.dater.client.window.TextBoxWin;
 import com.starcom.dater.shared.Utils;
 import com.starcom.dater.shared.FieldVerifier.CookieList;
 import com.starcom.dater.shared.FieldVerifier.ReqType;
 import com.starcom.dater.shared.lang.Text;
-import com.starcom.dater.shared.service.TextService;
-import com.starcom.dater.shared.service.TextServiceAsync;
 
 public class FormView
 {
