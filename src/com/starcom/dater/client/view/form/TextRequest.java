@@ -18,13 +18,28 @@ public class TextRequest
 {
   static Logger logger = Logger.getLogger(TextRequest.class.getName());
   private static final TextServiceAsync textService = GWT.create(TextService.class);
+
+  /** Requests with additional text used for textpaper. */
+  public static void requestWithText(final String surveyId, String userId, final ViewType viewType, String xtraTxt, TextResponse response)
+  {
+	  request(surveyId, userId, viewType, xtraTxt, response);
+  }
+  
+  /** Shows a form to fill in.
+   * @param viewType The first part of the transmitted response. */
+  public static void request(final String surveyId, String userId, final ViewType viewType, TextResponse response)
+  {
+	  request(surveyId, userId, viewType, null, response);
+  }
   
   /** Shows a form to fill in.
    * @param requestType The first part of the transmitted response. */
-  public static void request(final String surveyId, String userId, final ViewType viewType, TextResponse response)
+  private static void request(final String surveyId, String userId, final ViewType viewType, String xtraTxt, TextResponse response)
   {
+	if (xtraTxt != null) { xtraTxt = ":" + xtraTxt; }
+	else { xtraTxt = ""; }
     textService.sendTextToServer(
-        viewType + ":" + userId + ":" + surveyId, new AsyncCallback<String>()
+        viewType + ":" + userId + ":" + surveyId + xtraTxt, new AsyncCallback<String>()
     {
       @Override
       public void onFailure(Throwable caught)

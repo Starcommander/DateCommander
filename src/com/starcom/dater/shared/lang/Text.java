@@ -26,6 +26,7 @@ public abstract class Text
   public abstract String getForwardingToSurvey();
   public abstract String getSendToServer();
   public abstract String getSend();
+  public abstract String getEdit();
   public abstract String getReload();
   public abstract String getNoResultFromServer();
   public abstract String getServerReplies();

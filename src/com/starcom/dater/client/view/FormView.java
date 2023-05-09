@@ -7,6 +7,7 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.starcom.dater.client.util.DaterUtils;
 import com.starcom.dater.client.util.DaterUtils.ViewType;
 import com.starcom.dater.client.view.form.SurveyForm;
 import com.starcom.dater.client.view.form.TextRequest;
@@ -19,19 +20,13 @@ public class FormView
 {
 	  static Logger logger = Logger.getLogger(FormView.class.getName());
 
-	  final static String COOKIE_NAME_ID = CookieList.DaterNameId.toString();
 	  
 	  /** Shows a form to fill in.
 	   * @param viewType The first part of the transmitted response. */
 	  public static void showFormTable(final String surveyId, final ViewType viewType)
 	  {
+	    String userId = DaterUtils.getCreateUserIdCookie();
 	    logger.fine("Execute showFormTable(s,s)");
-	    String userId = Cookies.getCookie(COOKIE_NAME_ID);
-	    if (userId == null)
-	    {
-	      userId = Utils.generateID();
-	      Cookies.setCookie(COOKIE_NAME_ID, userId, Utils.getDateInYears());
-	    }
 	    if (surveyId == null)
 	    {
 	      showFormNow(null, surveyId, viewType);
@@ -62,7 +57,8 @@ public class FormView
       }
 
           /** Show the form for editing the survey itshelf, or the selected choices
-           * @param forceFormEdit True to ensure formular-edition-page. */
+           * @param viewType EdForm to ensure form-edition-page.
+           * @param prop The transmitted properties, or null for initial-edit. */
 	  public static void showFormNow(HashMap<String, String> prop, String surveyId, ViewType viewType)
 	  {
 	    Label errorLabel = new Label();

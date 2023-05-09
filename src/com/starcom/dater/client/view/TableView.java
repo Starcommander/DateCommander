@@ -97,8 +97,6 @@ public class TableView
       showUserTextbox(prop, surveyId);
     }
   }
-  
-
 
   /** Shows the context-menu for a non-admin user */
   private static void showUserTextbox(HashMap<String, String> prop, String surveyId)

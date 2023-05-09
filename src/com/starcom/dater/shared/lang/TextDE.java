@@ -20,6 +20,7 @@ public class TextDE extends Text
   @Override public String getForwardingToSurvey() { return "Weiterleitung zur Umfrage ..."; }
   @Override public String getSendToServer() { return "Sende an den Server"; }
   @Override public String getSend() { return "Senden"; }
+  @Override public String getEdit() { return "Bearbeiten"; }
   @Override public String getReload() { return "Erneut laden"; }
   @Override public String getServerReplies() { return "Server antwortet:"; }
   @Override public String getServerGetDataError() { return "Fehler beim Abrufen von Daten vom Server!"; }

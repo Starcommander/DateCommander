@@ -37,7 +37,7 @@ public class MainView {
 	        else if (viewType == DaterUtils.ViewType.ToTextPaper)
 	        {
 	          logger.info("Show ToTextPaper!");
-	          showTextPaperView("formContainer", null);
+	          new TextPaperView("formContainer").showTextPaper(surveyId);
 	        }
 	        else
 	        {
@@ -45,20 +45,6 @@ public class MainView {
 	          showOverviewNow();
 	        }
 	  }
-	  
-
-	private static void showTextPaperView(String editContainer, HashMap<String, String> prop)
-	{
-	    VerticalPanel vp = new VerticalPanel();
-	    TextArea txt = new TextArea();
-	    vp.add(txt);
-	    
-	    Button send = new Button();
-	    send.setText(Text.getCur().getSend());
-	    send.addClickHandler((ev) -> System.out.println("Send text now."));
-	    vp.add(send);
-	    RootPanel.get(editContainer).add(vp);
-	}
 
   public static void showOverviewNow()
   {

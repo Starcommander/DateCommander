@@ -20,6 +20,7 @@ public class TextEN extends Text
   @Override public String getForwardingToSurvey() { return "Forwarding to Survey ..."; }
   @Override public String getSendToServer() { return "Send to server"; }
   @Override public String getSend() { return "Send"; }
+  @Override public String getEdit() { return "Edit"; }
   @Override public String getReload() { return "Reload"; }
   @Override public String getServerReplies() { return "Server replies:"; }
   @Override public String getServerGetDataError() { return "Error getting data from server!"; }

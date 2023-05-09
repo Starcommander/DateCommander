@@ -41,14 +41,31 @@ public class TextServiceImpl extends RemoteServiceServlet implements TextService
       String ret = sendSurveyTable(fields[1], fields[2]).toString();
       return ret;
     }
+    else if (input.startsWith(ViewType.ToTextPaper.toString() + ":"))
+    { // Fields: view user survId txt
+      String[] fields = input.split(":");
+      String surveyId;
+      if ( fields.length < 3 ) throw new IllegalArgumentException("Fields len not ok!");
+      if (!FieldVerifier.isValidID(fields[1])) throw new IllegalArgumentException("UserID not ok!");
+      if (fields[2].equals("null")) { surveyId = createNewIdDir(); }
+      else { surveyId = fields[2]; }
+      if (!FieldVerifier.isValidID(surveyId)) throw new IllegalArgumentException("SurveyID not ok!");
+      String text = null;
+      if (fields.length == 4)
+      {
+        text = input.substring(fields[0].length() + 1 + fields[1].length() + 1 + fields[2].length() + 1 );
+      }
+      String ret = sendTextPaper(fields[1], surveyId, text).toString();
+      return surveyId + ":" + ret; //TODO: Better StringBuilder?
+    }
     else
     {
-      throw new IllegalArgumentException(
-          "Unknown Service received!");
+      throw new IllegalArgumentException("Unknown Service received!");
     }
   }
 
-  /** The userID and surveyID must be checked before. */
+  /** Creates the content for sending the table to the client.<br>
+   * The userID and surveyID must be checked before. */
   private StringBuilder sendSurveyTable(String userId, String surveyID)
   {
     File userDir = ServUtils.getWorkingDirExisting(surveyID, true);
@@ -64,8 +81,9 @@ public class TextServiceImpl extends RemoteServiceServlet implements TextService
     }
     return sb;
   }
-  
-  /** The userID and surveyID must be checked before. */
+
+  /** Creates the content for sending the table to the client.<br>
+   * The userID and surveyID must be checked before. */
   private StringBuilder sendSurvey(String userId, String surveyID) throws IllegalArgumentException
   {
     File userDir = ServUtils.getWorkingDirExisting(surveyID, true);
@@ -81,6 +99,33 @@ public class TextServiceImpl extends RemoteServiceServlet implements TextService
       sb.append("\n").append(FieldList.U_CH.toString() + i).append("=").append(val);
     }
     return sb;
+  }
+  
+  /** Creates the content for sending the txt-response to the client.<br>
+   * The userID and surveyID must be checked before. */
+  private StringBuilder sendTextPaper(String userId, String surveyID, String newText) throws IllegalArgumentException
+  {
+    File userDir = ServUtils.getWorkingDirExisting(surveyID, false);
+    File userFile = new File(userDir, "Content.txt");
+    StringBuilder sb = new StringBuilder();
+    if (newText == null)
+    {
+    	sb.append(ServUtils.readTextFile(userFile));
+    }
+    else
+    {
+    	ServUtils.writeTextFile(userFile, newText);
+    	sb.append(newText);
+    }
+    return sb;
+  }
+  
+  private String createNewIdDir()
+  {
+      //TODO: DuplicateCode in FormUploadResponse.java: NEW_SURVEY
+      String surveyId = Utils.generateID();
+      ServUtils.getWorkingDirNew(surveyId);
+      return surveyId;
   }
 
   /** Appends the values isUsrAdm and isUsrNew.<br>

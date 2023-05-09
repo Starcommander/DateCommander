@@ -3,13 +3,17 @@ package com.starcom.dater.client.util;
 import java.util.HashMap;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
+import com.starcom.dater.shared.FieldVerifier.CookieList;
 import com.starcom.dater.shared.FieldVerifier.FieldList;
 import com.starcom.dater.shared.FieldVerifier.UrlParameter;
+import com.starcom.dater.shared.Utils;
 import com.starcom.dater.shared.WebXml;
 
 public class DaterUtils
 {
+  final static String COOKIE_NAME_ID = CookieList.DaterNameId.toString();
   public static final String CHECK_IMG_MAYBE = "img/maybe.png";
   public static final String CHECK_IMG_YES = "img/yes.png";
   public static final String CHECK_IMG_NO = "img/no.png";
@@ -39,6 +43,20 @@ public class DaterUtils
     String prot = Window.Location.getProtocol();
     String host = Window.Location.getHost();
     return prot + "//" + host + "/";
+  }
+  
+  /** Creates and sets the User-Id-Cookie, if not present.<br>
+   * Otherwise just read from cookies.
+   * @return The existing or new userID */
+  public static String getCreateUserIdCookie()
+  {
+    String userId = Cookies.getCookie(COOKIE_NAME_ID);
+    if (userId == null)
+    {
+      userId = Utils.generateID();
+      Cookies.setCookie(COOKIE_NAME_ID, userId, Utils.getDateInYears());
+    }
+    return userId;
   }
   
   /** Builds the expected url with parameters, where surveyId may be null */
