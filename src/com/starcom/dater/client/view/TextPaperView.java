@@ -6,6 +6,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.starcom.dater.client.HtmlUtil;
 import com.starcom.dater.client.util.DaterUtils;
 import com.starcom.dater.client.util.DaterUtils.ViewType;
 import com.starcom.dater.client.view.form.TextRequest;
@@ -26,7 +27,7 @@ public class TextPaperView {
 	public TextPaperView(String htmlContainerId)
 	{
 		this.userId = DaterUtils.getCreateUserIdCookie();
-		this.surveyId = DaterUtils.requestSurveyId();
+		this.surveyId = DaterUtils.getParamSurveyId();
 		this.htmlContainerId = htmlContainerId;
 	}
 	
@@ -63,6 +64,7 @@ public class TextPaperView {
 	{
 		TextBoxWin win = new TextBoxWin("TODO: SHARE_TITLE");
 		win.setTextHtml("Just a text: " + DaterUtils.getUrl(surveyId, ViewType.ToTextPaper));
+		win.setTextHtml(HtmlUtil.buildShareButton(DaterUtils.getUrl(surveyId, ViewType.ToTextPaper)).toString());
 		win.showBox();
 	}
 	private void onSendTextPaper()

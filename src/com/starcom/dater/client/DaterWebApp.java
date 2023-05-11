@@ -30,7 +30,7 @@ public class DaterWebApp implements EntryPoint
     Text.selectLanguage(curL);
           logger.info("Now onModuleLoad!");
     
-    final String surveyId = DaterUtils.requestSurveyId();
+    final String surveyId = DaterUtils.getParamSurveyId();
     boolean c_allowed = Boolean.parseBoolean(Cookies.getCookie(COOKIE_ALLOWED));
     if (c_allowed) { MainView.showSelectedViewType(surveyId); }
     else

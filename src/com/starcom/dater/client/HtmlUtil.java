@@ -19,7 +19,15 @@ public class HtmlUtil
     if (DaterUtils.getOsType() == DaterUtils.OsType.Mac) { sb.append("sms:;body="); }
     else { sb.append("sms:?body="); }
     sb.append(link);
-    sb.append("'>Share: SMS</a>");
+    sb.append("'>Share: SMS</a><br/>");
+
+    sb.append("<a href='#' onclick=\"navigator.clipboard.writeText('");
+    sb.append(link);
+    sb.append("').then(() => { window.alert('Copied to clipboard:\\n");
+    sb.append(link);
+    sb.append("') } , () => { window.alert('Copied to clipboard:\\n");
+    sb.append(link);
+    sb.append("') });\"' >Share: COPY_CLIPBOARD</a>");
     return sb;
   }
   

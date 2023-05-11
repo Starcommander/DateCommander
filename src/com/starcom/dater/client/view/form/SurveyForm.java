@@ -107,7 +107,7 @@ public class SurveyForm
       nameField.setName(F_USER_NAME);
       daterName = getCookie(C_DATER_NAME, null);
       daterNameId = getCookie(C_DATER_NAME_ID, null);
-      String daterSurveyId = DaterUtils.requestSurveyId();
+      String daterSurveyId = DaterUtils.getParamSurveyId();
       if (daterName != null)
       {
         nameField.setText(daterName);

@@ -31,7 +31,7 @@ public class DaterUtils
   }
   
   /** @return The uri-parameter-value, or null if missing. */
-  public static String requestSurveyId()
+  public static String getParamSurveyId()
   {
     String surveyId = Window.Location.getParameter(UrlParameter.SurveyId.toString());
     return surveyId;

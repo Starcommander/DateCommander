@@ -144,7 +144,7 @@ public class TableView
 
   private static String buildGreetTextWithLinks(boolean admin)
   {
-    String shareUrl = DaterUtils.getUrl(DaterUtils.requestSurveyId(), ViewType.ToSurvey);
+    String shareUrl = DaterUtils.getUrl(DaterUtils.getParamSurveyId(), ViewType.ToSurvey);
     StringBuilder sb = new StringBuilder();
     if (admin) { sb.append(Text.getCur().getGreetAdminHtml()); }
     else { sb.append(Text.getCur().getGreetUsrHtml()); }

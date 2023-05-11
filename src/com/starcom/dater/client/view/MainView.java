@@ -1,12 +1,9 @@
 package com.starcom.dater.client.view;
 
-import java.util.HashMap;
 import java.util.logging.Logger;
 
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextArea;
 import com.starcom.dater.client.util.DaterUtils;
 import com.starcom.dater.client.util.DaterUtils.ViewType;
 import com.starcom.dater.shared.lang.Text;

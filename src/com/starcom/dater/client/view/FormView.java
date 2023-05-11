@@ -3,7 +3,6 @@ package com.starcom.dater.client.view;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -13,7 +12,6 @@ import com.starcom.dater.client.view.form.SurveyForm;
 import com.starcom.dater.client.view.form.TextRequest;
 import com.starcom.dater.client.window.CommitBox;
 import com.starcom.dater.shared.Utils;
-import com.starcom.dater.shared.FieldVerifier.CookieList;
 import com.starcom.dater.shared.lang.Text;
 
 public class FormView
