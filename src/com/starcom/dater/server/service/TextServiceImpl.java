@@ -51,7 +51,7 @@ public class TextServiceImpl extends RemoteServiceServlet implements TextService
       else { surveyId = fields[2]; }
       if (!FieldVerifier.isValidID(surveyId)) throw new IllegalArgumentException("SurveyID not ok!");
       String text = null;
-      if (fields.length == 4)
+      if (fields.length >= 4)
       {
         text = input.substring(fields[0].length() + 1 + fields[1].length() + 1 + fields[2].length() + 1 );
       }
