@@ -11,7 +11,7 @@ This app is ...
 * Server and client side written in java
 
 Build
-* You can Build it with: ant build
+* You can build it with: ant build
 * First you have to get GWT and libs:
 * See lib/Info.txt and gwt-sdk/Info.txt
 
