@@ -19,7 +19,9 @@ Test
 * You can test the app locally with ant devmode
 
 Installer
-* There are 2 installers that you can execute:
+* Build a JavaWebArchive with: ant war
+* See publish.sh howto publish such a web archive.
+* There are also 2 experimental installers that you can execute:
 * Debian - Creates a *.deb for installing on a linux-debian machine.
 * Docker - Creates a docker image, for running on any linux machine.
 

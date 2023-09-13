@@ -28,6 +28,7 @@ public class TextEN extends Text
   @Override public String getUseMarkdown() { return "Use markdown: The use of * or 1. or http:// is converted."; }
   @Override public String getNewSurvey() { return "Create new survey"; }
   @Override public String getNewTextPaper() { return "Create new text paper"; }
+  @Override public String getFirstEditPaper() { return "Please edit paper first"; }
   @Override public String getCookieNeededHtml()
   {
     return "<b>Cookies are used to idendificate survey admins and users.</b><br/>"

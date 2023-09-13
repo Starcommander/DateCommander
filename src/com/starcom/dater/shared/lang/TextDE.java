@@ -28,6 +28,7 @@ public class TextDE extends Text
   @Override public String getUseMarkdown() { return "Verwende Markdown: Verwendunv von * oder 1. oder http:// wird konvertiert."; }
   @Override public String getNewSurvey() { return "Neue Umfrage erstellen"; }
   @Override public String getNewTextPaper() { return "Neues Textblatt erstellen"; }
+  @Override public String getFirstEditPaper() { return "Bitte zuerst Blatt editieren"; }
   @Override public String getCookieNeededHtml()
   {
     return "<b>Cookies werden ben\u00f6tigt, um Benutzer<br/>und Admin der Umfrage zu identifizieren.</b><br/>"

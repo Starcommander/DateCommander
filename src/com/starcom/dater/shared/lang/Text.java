@@ -35,6 +35,7 @@ public abstract class Text
   public abstract String getUseMarkdown();
   public abstract String getNewSurvey();
   public abstract String getNewTextPaper();
+  public abstract String getFirstEditPaper();
   public static void selectLanguage(String lang)
   { // Default is en.
     if (lang.equalsIgnoreCase("de")) { curLang = new TextDE(); }

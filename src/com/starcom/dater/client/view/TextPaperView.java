@@ -31,12 +31,13 @@ public class TextPaperView {
 		this.htmlContainerId = htmlContainerId;
 	}
 	
-	protected void showTextPaper(String surveyID)
+	protected void showTextPaper(String surveyId)
 	{
 		init();
-		if (surveyID != null)
+		if (surveyId != null)
 		{
-          TextRequest.request(surveyId, userId, ViewType.ToTextPaper, s -> onResponse(s));
+			this.surveyId = surveyId;
+			TextRequest.request(surveyId, userId, ViewType.ToTextPaper, s -> onResponse(s));
 		}
 	}
 	
@@ -54,7 +55,7 @@ public class TextPaperView {
 	    vp.add(send);
 	    
 	    Button share = new Button();
-	    share.setText("TODO Share Icon");
+	    share.setHTML("<img src='img/share.png' alt='Share' />");
 	    share.addClickHandler((ev) ->  generateShareWin());
 	    vp.add(share);
 	    RootPanel.get(htmlContainerId).add(vp);
@@ -62,9 +63,15 @@ public class TextPaperView {
 	
 	private void generateShareWin()
 	{
-		TextBoxWin win = new TextBoxWin("TODO: SHARE_TITLE");
-		win.setTextHtml("Just a text: " + DaterUtils.getUrl(surveyId, ViewType.ToTextPaper));
-		win.setTextHtml(HtmlUtil.buildShareButton(DaterUtils.getUrl(surveyId, ViewType.ToTextPaper)).toString());
+		TextBoxWin win = new TextBoxWin("SHARE");
+		if (surveyId == null)
+		{
+			win.setTextHtml(Text.getCur().getFirstEditPaper());
+		}
+		else
+		{
+			win.setTextHtml(HtmlUtil.buildShareButton(DaterUtils.getUrl(surveyId, ViewType.ToTextPaper)).toString());
+		}
 		win.showBox();
 	}
 	private void onSendTextPaper()
@@ -100,6 +107,5 @@ public class TextPaperView {
 		txt.setText(reText);
 		txt.setReadOnly(true);
 		send.setText(Text.getCur().getEdit());
-		//TODO: Share-Link create with surveyID
 	}
 }

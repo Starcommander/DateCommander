@@ -9,24 +9,25 @@ public class HtmlUtil
 {
   public static StringBuilder buildShareButton(String link)
   {
+    String escapedLink = link.replace(":", "%3A").replace("/", "%2F").replace("&", "%26");
     StringBuilder sb = new StringBuilder();
     sb.append("<a href='");
-    sb.append("mailto:?to=&subject=Share%20Dater%20WebApp&body=");
-    sb.append(link.replace(":", "%3A").replace("/", "%2F"));
+    sb.append("mailto:?subject=Share%20Dater%20WebApp&body=");
+    sb.append(escapedLink);
     sb.append("'>Share: MAILTO</a><br/>");
     
     sb.append("<a href='");
     if (DaterUtils.getOsType() == DaterUtils.OsType.Mac) { sb.append("sms:;body="); }
     else { sb.append("sms:?body="); }
-    sb.append(link);
+    sb.append(escapedLink);
     sb.append("'>Share: SMS</a><br/>");
 
     sb.append("<a href='#' onclick=\"navigator.clipboard.writeText('");
-    sb.append(link);
+    sb.append(escapedLink);
     sb.append("').then(() => { window.alert('Copied to clipboard:\\n");
-    sb.append(link);
+    sb.append(escapedLink);
     sb.append("') } , () => { window.alert('Copied to clipboard:\\n");
-    sb.append(link);
+    sb.append(escapedLink);
     sb.append("') });\"' >Share: COPY_CLIPBOARD</a>");
     return sb;
   }
